@@ -1,0 +1,286 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shana E-Learning API",
+    "version": "1.0.0",
+    "description": "API for testing with Swagger UI. Use Authorize to set a Bearer token after login."
+  },
+  "servers": [
+    { "url": "http://localhost:3000", "description": "Local" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "LoginBody": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string" }
+        }
+      },
+      "RegisterBody": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterBody" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Created" },
+          "409": { "description": "Email already in use" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login",
+        "tags": ["Auth"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginBody" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Returns accessToken and user" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "summary": "Refresh token (uses cookie)",
+        "tags": ["Auth"],
+        "responses": {
+          "200": { "description": "New accessToken" },
+          "401": { "description": "No/invalid refresh token" }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "tags": ["Auth"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Cookie cleared" } }
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "summary": "Get my profile",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "User profile" }, "401": { "description": "Unauthorized" } }
+      },
+      "put": {
+        "summary": "Update my profile",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Updated user" } }
+      }
+    },
+    "/api/courses": {
+      "get": {
+        "summary": "List courses",
+        "tags": ["Courses"],
+        "parameters": [{ "name": "published", "in": "query", "schema": { "type": "boolean" } }],
+        "responses": { "200": { "description": "List of courses" } }
+      },
+      "post": {
+        "summary": "Create course (instructor/admin)",
+        "tags": ["Courses"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "thumbnail": { "type": "string" },
+                  "difficulty": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+                  "published": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/courses/{id}": {
+      "get": {
+        "summary": "Get course by id",
+        "tags": ["Courses"],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "summary": "Update course (instructor/admin)",
+        "tags": ["Courses"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "delete": {
+        "summary": "Delete course (admin)",
+        "tags": ["Courses"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/api/courses/{id}/enroll": {
+      "post": {
+        "summary": "Enroll in course",
+        "tags": ["Courses"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/api/courses/{courseId}/lessons": {
+      "get": {
+        "summary": "List lessons",
+        "tags": ["Lessons"],
+        "parameters": [{ "name": "courseId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" } }
+      },
+      "post": {
+        "summary": "Create lesson (instructor/admin)",
+        "tags": ["Lessons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "courseId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "content": { "type": "string" },
+                  "videoUrl": { "type": "string" },
+                  "order": { "type": "integer" },
+                  "duration": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Created" } }
+      }
+    },
+    "/api/courses/{courseId}/lessons/{lessonId}": {
+      "get": {
+        "summary": "Get lesson",
+        "tags": ["Lessons"],
+        "parameters": [
+          { "name": "courseId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "lessonId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "summary": "Update lesson",
+        "tags": ["Lessons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "courseId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "lessonId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "delete": {
+        "summary": "Delete lesson",
+        "tags": ["Lessons"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "courseId", "in": "path", "required": true, "schema": { "type": "string" } },
+          { "name": "lessonId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+      }
+    },
+    "/api/enrollments": {
+      "get": {
+        "summary": "My enrollments",
+        "tags": ["Enrollments"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/api/enrollments/{id}": {
+      "get": {
+        "summary": "Get enrollment",
+        "tags": ["Enrollments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "put": {
+        "summary": "Update enrollment (e.g. progress)",
+        "tags": ["Enrollments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "progressPercent": { "type": "integer", "minimum": 0, "maximum": 100 }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+      },
+      "delete": {
+        "summary": "Unenroll",
+        "tags": ["Enrollments"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+      }
+    }
+  }
+}
