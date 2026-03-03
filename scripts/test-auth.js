@@ -5,7 +5,8 @@
 const BASE = 'http://localhost:3000';
 
 const testUser = {
-  name: 'Test User',
+  firstName: 'Test',
+  lastName: 'User',
   email: 'testuser@example.com',
   password: 'testpass123',
 };

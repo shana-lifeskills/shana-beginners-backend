@@ -5,12 +5,19 @@ const { authenticate } = require('../middleware/auth');
 router.get('/me', authenticate, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'name', 'email', 'role'],
+      attributes: ['id', 'firstName', 'lastName', 'email', 'profileImage', 'role'],
     });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json(user);
+    res.json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      profileImage: user.profileImage ?? null,
+      role: user.role,
+    });
   } catch (err) {
     next(err);
   }
@@ -23,13 +30,17 @@ router.put('/me', authenticate, async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
     const updates = {};
-    if (req.body.name !== undefined) updates.name = req.body.name;
+    if (req.body.firstName !== undefined) updates.firstName = req.body.firstName;
+    if (req.body.lastName !== undefined) updates.lastName = req.body.lastName;
     if (req.body.email !== undefined) updates.email = req.body.email;
+    if (req.body.profileImage !== undefined) updates.profileImage = req.body.profileImage || null;
     await user.update(updates);
     res.json({
       id: user.id,
-      name: user.name,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
+      profileImage: user.profileImage ?? null,
       role: user.role,
     });
   } catch (err) {

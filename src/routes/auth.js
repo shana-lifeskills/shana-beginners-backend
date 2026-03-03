@@ -2,6 +2,7 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { authenticate } = require('../middleware/auth');
+const { isValidEmail, validatePassword } = require('../utils/validation');
 
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY = '7d';
@@ -32,20 +33,59 @@ function setRefreshTokenCookie(res, token) {
   });
 }
 
+function toUserResponse(user) {
+  return {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    profileImage: user.profileImage ?? null,
+    role: user.role,
+  };
+}
+
 router.post('/register', async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
-    const existing = await User.findOne({ where: { email } });
+    const { firstName, lastName, email, password, profileImage } = req.body;
+
+    if (!firstName || typeof firstName !== 'string' || !firstName.trim()) {
+      return res.status(400).json({ message: 'First name is required' });
+    }
+    if (!lastName || typeof lastName !== 'string' || !lastName.trim()) {
+      return res.status(400).json({ message: 'Last name is required' });
+    }
+    if (!email || typeof email !== 'string') {
+      return res.status(400).json({ message: 'Email is required' });
+    }
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
+    if (!password || typeof password !== 'string') {
+      return res.status(400).json({ message: 'Password is required' });
+    }
+    const pwdCheck = validatePassword(password);
+    if (!pwdCheck.valid) {
+      return res.status(400).json({ message: pwdCheck.message });
+    }
+
+    const existing = await User.findOne({ where: { email: email.trim().toLowerCase() } });
     if (existing) {
       return res.status(409).json({ message: 'Email already in use' });
     }
-    const user = await User.create({ name, email, password });
+
+    const user = await User.create({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.trim().toLowerCase(),
+      password,
+      profileImage: profileImage && typeof profileImage === 'string' ? profileImage.trim() || null : null,
+    });
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
     setRefreshTokenCookie(res, refreshToken);
     res.status(201).json({
       accessToken,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: toUserResponse(user),
     });
   } catch (err) {
     next(err);
@@ -55,7 +95,8 @@ router.post('/register', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
+    const emailNorm = email && typeof email === 'string' ? email.trim().toLowerCase() : '';
+    const user = await User.findOne({ where: { email: emailNorm } });
     if (!user || !(await user.validatePassword(password))) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
@@ -64,7 +105,7 @@ router.post('/login', async (req, res, next) => {
     setRefreshTokenCookie(res, refreshToken);
     res.json({
       accessToken,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: toUserResponse(user),
     });
   } catch (err) {
     next(err);

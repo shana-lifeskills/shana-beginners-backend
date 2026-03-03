@@ -22,7 +22,7 @@ router.get('/:id', authenticate, async (req, res, next) => {
     const enrollment = await Enrollment.findOne({
       where: { id: req.params.id, userId: req.user.id },
       include: [
-        { model: Course, include: [{ model: User, as: 'instructor', attributes: ['id', 'name'] }] },
+        { model: Course, include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }] },
       ],
     });
     if (!enrollment) {

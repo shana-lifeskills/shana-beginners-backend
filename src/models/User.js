@@ -8,7 +8,11 @@ const User = sequelize.define('User', {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  name: {
+  firstName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  lastName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -21,6 +25,10 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  profileImage: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   role: {
     type: DataTypes.ENUM('student', 'instructor', 'admin'),

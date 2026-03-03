@@ -11,7 +11,7 @@ router.get('/', async (req, res, next) => {
     }
     const courses = await Course.findAll({
       where,
-      include: [{ model: User, as: 'instructor', attributes: ['id', 'name'] }],
+      include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }],
     });
     res.json(courses);
   } catch (err) {
@@ -23,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const course = await Course.findByPk(req.params.id, {
       include: [
-        { model: User, as: 'instructor', attributes: ['id', 'name'] },
+        { model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] },
         { model: Lesson, order: [['order', 'ASC']] },
       ],
     });
