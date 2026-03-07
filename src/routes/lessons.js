@@ -1,27 +1,10 @@
 const router = require('express').Router();
-const { Lesson, Course } = require('../models');
+const { Lesson, Module } = require('../models');
 const { authenticate, authorize } = require('../middleware/auth');
 
-router.get('/:courseId/lessons', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const lessons = await Lesson.findAll({
-      where: { courseId: req.params.courseId },
-      order: [['order', 'ASC']],
-    });
-    res.json(lessons);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.get('/:courseId/lessons/:id', async (req, res, next) => {
-  try {
-    const lesson = await Lesson.findOne({
-      where: {
-        id: req.params.id,
-        courseId: req.params.courseId,
-      },
-    });
+    const lesson = await Lesson.findByPk(req.params.id);
     if (!lesson) {
       return res.status(404).json({ message: 'Lesson not found' });
     }
@@ -31,52 +14,35 @@ router.get('/:courseId/lessons/:id', async (req, res, next) => {
   }
 });
 
-router.post('/:courseId/lessons', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
+router.put('/:id', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
   try {
-    const course = await Course.findByPk(req.params.courseId);
-    if (!course) {
-      return res.status(404).json({ message: 'Course not found' });
-    }
-    const lesson = await Lesson.create({
-      ...req.body,
-      courseId: req.params.courseId,
-    });
-    res.status(201).json(lesson);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.put('/:courseId/lessons/:id', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
-  try {
-    const lesson = await Lesson.findOne({
-      where: {
-        id: req.params.id,
-        courseId: req.params.courseId,
-      },
-    });
+    const lesson = await Lesson.findByPk(req.params.id);
     if (!lesson) {
       return res.status(404).json({ message: 'Lesson not found' });
     }
     await lesson.update(req.body);
+
+    const lessonCount = await Lesson.count({ where: { moduleId: lesson.moduleId } });
+    await Module.update({ totalLessons: lessonCount }, { where: { id: lesson.moduleId } });
+
     res.json(lesson);
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/:courseId/lessons/:id', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
+router.delete('/:id', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
   try {
-    const lesson = await Lesson.findOne({
-      where: {
-        id: req.params.id,
-        courseId: req.params.courseId,
-      },
-    });
+    const lesson = await Lesson.findByPk(req.params.id);
     if (!lesson) {
       return res.status(404).json({ message: 'Lesson not found' });
     }
+    const { moduleId } = lesson;
     await lesson.destroy();
+
+    const lessonCount = await Lesson.count({ where: { moduleId } });
+    await Module.update({ totalLessons: lessonCount }, { where: { id: moduleId } });
+
     res.status(204).end();
   } catch (err) {
     next(err);

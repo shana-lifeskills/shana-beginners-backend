@@ -34,6 +34,22 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('student', 'instructor', 'admin'),
     defaultValue: 'student',
   },
+  stars: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  badges: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  trophies: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  modulesCompleted: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 }, {
   hooks: {
     beforeCreate: async (user) => {

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Course = sequelize.define('Course', {
+const Module = sequelize.define('Module', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -17,6 +17,9 @@ const Course = sequelize.define('Course', {
   thumbnail: {
     type: DataTypes.STRING,
   },
+  icon: {
+    type: DataTypes.STRING,
+  },
   difficulty: {
     type: DataTypes.ENUM('beginner', 'intermediate', 'advanced'),
     defaultValue: 'beginner',
@@ -25,6 +28,22 @@ const Course = sequelize.define('Course', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  totalStars: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalBadges: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalTrophies: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalLessons: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
-module.exports = Course;
+module.exports = Module;
