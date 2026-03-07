@@ -10,10 +10,11 @@ const { sequelize } = require('./src/models');
 const { errorHandler } = require('./src/middleware/errorHandler');
 
 const authRoutes = require('./src/routes/auth');
-const courseRoutes = require('./src/routes/courses');
+const moduleRoutes = require('./src/routes/modules');
 const lessonRoutes = require('./src/routes/lessons');
 const userRoutes = require('./src/routes/users');
 const enrollmentRoutes = require('./src/routes/enrollments');
+const studentRoutes = require('./src/routes/students');
 
 let openapiSpec = {};
 try {
@@ -45,10 +46,11 @@ app.use(express.json());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec, { customCss: '.swagger-ui .topbar { display: none }' }));
 
 app.use('/api/auth', authRoutes);
-app.use('/api/courses', courseRoutes);
-app.use('/api/courses', lessonRoutes);
+app.use('/api/modules', moduleRoutes);
+app.use('/api/lessons', lessonRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
+app.use('/api/students', studentRoutes);
 
 app.use(errorHandler);
 

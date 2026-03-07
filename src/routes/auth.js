@@ -41,6 +41,10 @@ function toUserResponse(user) {
     email: user.email,
     profileImage: user.profileImage ?? null,
     role: user.role,
+    stars: user.stars,
+    badges: user.badges,
+    trophies: user.trophies,
+    modulesCompleted: user.modulesCompleted,
   };
 }
 

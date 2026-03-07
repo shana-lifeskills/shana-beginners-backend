@@ -1,25 +1,33 @@
 const sequelize = require('../config/database');
 const User = require('./User');
-const Course = require('./Course');
+const Module = require('./Module');
 const Lesson = require('./Lesson');
 const Enrollment = require('./Enrollment');
-Course.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
-User.hasMany(Course, { foreignKey: 'instructorId' });
+const StudentLesson = require('./StudentLesson');
 
-Course.hasMany(Lesson, { foreignKey: 'courseId', onDelete: 'CASCADE' });
-Lesson.belongsTo(Course, { foreignKey: 'courseId' });
+Module.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
+User.hasMany(Module, { foreignKey: 'instructorId' });
 
-User.belongsToMany(Course, { through: Enrollment, as: 'enrolledCourses', foreignKey: 'userId' });
-Course.belongsToMany(User, { through: Enrollment, as: 'students', foreignKey: 'courseId' });
+Module.hasMany(Lesson, { foreignKey: 'moduleId', onDelete: 'CASCADE' });
+Lesson.belongsTo(Module, { foreignKey: 'moduleId' });
+
+User.belongsToMany(Module, { through: Enrollment, as: 'enrolledModules', foreignKey: 'userId' });
+Module.belongsToMany(User, { through: Enrollment, as: 'students', foreignKey: 'moduleId' });
 Enrollment.belongsTo(User, { foreignKey: 'userId' });
-Enrollment.belongsTo(Course, { foreignKey: 'courseId' });
+Enrollment.belongsTo(Module, { foreignKey: 'moduleId' });
 User.hasMany(Enrollment, { foreignKey: 'userId' });
-Course.hasMany(Enrollment, { foreignKey: 'courseId' });
+Module.hasMany(Enrollment, { foreignKey: 'moduleId' });
+
+StudentLesson.belongsTo(User, { foreignKey: 'userId' });
+StudentLesson.belongsTo(Lesson, { foreignKey: 'lessonId' });
+User.hasMany(StudentLesson, { foreignKey: 'userId' });
+Lesson.hasMany(StudentLesson, { foreignKey: 'lessonId' });
 
 module.exports = {
   sequelize,
   User,
-  Course,
+  Module,
   Lesson,
   Enrollment,
+  StudentLesson,
 };

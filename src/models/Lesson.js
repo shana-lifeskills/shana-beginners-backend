@@ -24,6 +24,21 @@ const Lesson = sequelize.define('Lesson', {
   duration: {
     type: DataTypes.INTEGER,
   },
+  weekNumber: {
+    type: DataTypes.INTEGER,
+  },
+  totalStars: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalBadges: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  totalTrophies: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
 });
 
 module.exports = Lesson;

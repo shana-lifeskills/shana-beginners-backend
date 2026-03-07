@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Enrollment = sequelize.define('Enrollment', {
+const StudentLesson = sequelize.define('StudentLesson', {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -13,21 +13,17 @@ const Enrollment = sequelize.define('Enrollment', {
     references: { model: 'Users', key: 'id' },
     onDelete: 'CASCADE',
   },
-  moduleId: {
+  lessonId: {
     type: DataTypes.UUID,
     allowNull: false,
-    references: { model: 'Modules', key: 'id' },
+    references: { model: 'Lessons', key: 'id' },
     onDelete: 'CASCADE',
   },
-  enrolledAt: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
-  },
   status: {
-    type: DataTypes.ENUM('locked', 'unlocked', 'completed'),
+    type: DataTypes.ENUM('locked', 'in-progress', 'completed'),
     defaultValue: 'locked',
   },
-  progressPercent: {
+  progress: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
     validate: { min: 0, max: 100 },
@@ -45,10 +41,10 @@ const Enrollment = sequelize.define('Enrollment', {
     defaultValue: 0,
   },
 }, {
-  tableName: 'Enrollments',
+  tableName: 'StudentLessons',
   indexes: [
-    { unique: true, fields: ['userId', 'moduleId'] },
+    { unique: true, fields: ['userId', 'lessonId'] },
   ],
 });
 
-module.exports = Enrollment;
+module.exports = StudentLesson;
