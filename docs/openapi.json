@@ -6,6 +6,10 @@
     "description": "API for the SHANA eLearning platform. Use Authorize to set a Bearer token after login."
   },
   "servers": [
+    {
+      "url": "https://api-shana-beginners.onrender.com",
+      "description": "Production"
+    },
     { "url": "http://localhost:3000", "description": "Local" }
   ],
   "components": {
@@ -32,8 +36,15 @@
           "firstName": { "type": "string" },
           "lastName": { "type": "string" },
           "email": { "type": "string", "format": "email" },
-          "password": { "type": "string", "description": "At least 8 characters, one letter and one number" },
-          "profileImage": { "type": "string", "nullable": true, "description": "URL or path (optional)" }
+          "password": {
+            "type": "string",
+            "description": "At least 8 characters, one letter and one number"
+          },
+          "profileImage": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL or path (optional)"
+          }
         }
       },
       "ModuleBody": {
@@ -43,7 +54,10 @@
           "description": { "type": "string" },
           "thumbnail": { "type": "string" },
           "icon": { "type": "string" },
-          "difficulty": { "type": "string", "enum": ["beginner", "intermediate", "advanced"] },
+          "difficulty": {
+            "type": "string",
+            "enum": ["beginner", "intermediate", "advanced"]
+          },
           "published": { "type": "boolean" },
           "totalStars": { "type": "integer" },
           "totalBadges": { "type": "integer" },
@@ -134,7 +148,10 @@
         "summary": "Get my profile",
         "tags": ["Users"],
         "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "User profile" }, "401": { "description": "Unauthorized" } }
+        "responses": {
+          "200": { "description": "User profile" },
+          "401": { "description": "Unauthorized" }
+        }
       },
       "put": {
         "summary": "Update my profile",
@@ -162,7 +179,13 @@
       "get": {
         "summary": "List modules",
         "tags": ["Modules"],
-        "parameters": [{ "name": "published", "in": "query", "schema": { "type": "boolean" } }],
+        "parameters": [
+          {
+            "name": "published",
+            "in": "query",
+            "schema": { "type": "boolean" }
+          }
+        ],
         "responses": { "200": { "description": "List of modules" } }
       },
       "post": {
@@ -183,14 +206,31 @@
       "get": {
         "summary": "Get module by id",
         "tags": ["Modules"],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "put": {
         "summary": "Update module (instructor/admin)",
         "tags": ["Modules"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -198,14 +238,27 @@
             }
           }
         },
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "delete": {
         "summary": "Delete module (admin)",
         "tags": ["Modules"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No content" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/modules/{id}/enroll": {
@@ -213,15 +266,32 @@
         "summary": "Enroll in module",
         "tags": ["Modules"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/modules/{id}/lessons": {
       "get": {
         "summary": "List lessons in a module",
         "tags": ["Modules", "Lessons"],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "OK" } }
       }
     },
@@ -230,7 +300,14 @@
         "summary": "Create lesson in module (instructor/admin)",
         "tags": ["Modules", "Lessons"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "moduleId", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -238,7 +315,10 @@
             }
           }
         },
-        "responses": { "201": { "description": "Created" }, "404": { "description": "Module not found" } }
+        "responses": {
+          "201": { "description": "Created" },
+          "404": { "description": "Module not found" }
+        }
       }
     },
     "/api/modules/{id}/students": {
@@ -246,22 +326,49 @@
         "summary": "Get enrolled students (instructor/admin)",
         "tags": ["Modules"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/lessons/{id}": {
       "get": {
         "summary": "Get lesson by id",
         "tags": ["Lessons"],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "put": {
         "summary": "Update lesson (instructor/admin)",
         "tags": ["Lessons"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -269,14 +376,27 @@
             }
           }
         },
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "delete": {
         "summary": "Delete lesson (instructor/admin)",
         "tags": ["Lessons"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No content" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/students": {
@@ -292,22 +412,52 @@
         "summary": "Get student by id",
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "put": {
         "summary": "Update student",
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "delete": {
         "summary": "Delete student (admin)",
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No content" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/students/{id}/modules": {
@@ -315,7 +465,14 @@
         "summary": "Get student's enrolled modules",
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "OK" } }
       }
     },
@@ -325,8 +482,18 @@
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } },
-          { "name": "moduleId", "in": "query", "schema": { "type": "string" }, "description": "Filter by module" }
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "moduleId",
+            "in": "query",
+            "schema": { "type": "string" },
+            "description": "Filter by module"
+          }
         ],
         "responses": { "200": { "description": "OK" } }
       }
@@ -337,8 +504,18 @@
         "tags": ["Students", "Progress"],
         "security": [{ "bearerAuth": [] }],
         "parameters": [
-          { "name": "studentId", "in": "path", "required": true, "schema": { "type": "string" } },
-          { "name": "lessonId", "in": "path", "required": true, "schema": { "type": "string" } }
+          {
+            "name": "studentId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "lessonId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
         ],
         "requestBody": {
           "content": {
@@ -347,7 +524,11 @@
             }
           }
         },
-        "responses": { "200": { "description": "OK" }, "400": { "description": "Validation error" }, "422": { "description": "Previous lesson not completed" } }
+        "responses": {
+          "200": { "description": "OK" },
+          "400": { "description": "Validation error" },
+          "422": { "description": "Previous lesson not completed" }
+        }
       }
     },
     "/api/students/{id}/progress/summary": {
@@ -355,7 +536,14 @@
         "summary": "Get student progress summary",
         "tags": ["Students", "Progress"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "responses": { "200": { "description": "OK" } }
       }
     },
@@ -364,8 +552,18 @@
         "summary": "Get student stats",
         "tags": ["Students"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       }
     },
     "/api/enrollments": {
@@ -381,34 +579,68 @@
         "summary": "Get enrollment",
         "tags": ["Enrollments"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "put": {
         "summary": "Update enrollment (e.g. progress)",
         "tags": ["Enrollments"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "progressPercent": { "type": "integer", "minimum": 0, "maximum": 100 }
+                  "progressPercent": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
                 }
               }
             }
           }
         },
-        "responses": { "200": { "description": "OK" }, "404": { "description": "Not found" } }
+        "responses": {
+          "200": { "description": "OK" },
+          "404": { "description": "Not found" }
+        }
       },
       "delete": {
         "summary": "Unenroll",
         "tags": ["Enrollments"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
-        "responses": { "204": { "description": "No content" }, "404": { "description": "Not found" } }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "No content" },
+          "404": { "description": "Not found" }
+        }
       }
     }
   }
