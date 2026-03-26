@@ -1,13 +1,12 @@
 const router = require('express').Router();
-const { Enrollment, Course, User } = require('../models');
+const { Enrollment, Module, User } = require('../models');
 const { authenticate } = require('../middleware/auth');
 
-// List current user's enrollments
 router.get('/', authenticate, async (req, res, next) => {
   try {
     const enrollments = await Enrollment.findAll({
       where: { userId: req.user.id },
-      include: [{ model: Course, attributes: ['id', 'title', 'thumbnail', 'difficulty'] }],
+      include: [{ model: Module, attributes: ['id', 'title', 'thumbnail', 'difficulty', 'icon', 'totalLessons'] }],
       order: [['enrolledAt', 'DESC']],
     });
     res.json(enrollments);
@@ -16,13 +15,12 @@ router.get('/', authenticate, async (req, res, next) => {
   }
 });
 
-// Get one enrollment by id (must belong to current user)
 router.get('/:id', authenticate, async (req, res, next) => {
   try {
     const enrollment = await Enrollment.findOne({
       where: { id: req.params.id, userId: req.user.id },
       include: [
-        { model: Course, include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }] },
+        { model: Module, include: [{ model: User, as: 'instructor', attributes: ['id', 'firstName', 'lastName'] }] },
       ],
     });
     if (!enrollment) {
@@ -34,7 +32,6 @@ router.get('/:id', authenticate, async (req, res, next) => {
   }
 });
 
-// Update enrollment (e.g. progress)
 router.put('/:id', authenticate, async (req, res, next) => {
   try {
     const enrollment = await Enrollment.findOne({
@@ -53,7 +50,6 @@ router.put('/:id', authenticate, async (req, res, next) => {
   }
 });
 
-// Unenroll (delete enrollment)
 router.delete('/:id', authenticate, async (req, res, next) => {
   try {
     const enrollment = await Enrollment.findOne({
