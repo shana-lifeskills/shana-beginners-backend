@@ -31,18 +31,18 @@ try {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const defaultOrigins = ["http://localhost:3000", "http://localhost:4200"];
+const envOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(",").map((s) => s.trim()).filter(Boolean)
+  : [];
+const clientOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
+
 app.use(
-  helmet({ contentSecurityPolicy: process.env.NODE_ENV === "production" }),
+  helmet({
+    contentSecurityPolicy: process.env.NODE_ENV === "production",
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  }),
 );
-const clientOrigins = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-  : [
-      "http://localhost:3000",
-      "http://localhost:4200",
-      "https://shana-platform.netlify.app",
-    ];
 app.use(
   cors({
     origin: (origin, cb) => {
