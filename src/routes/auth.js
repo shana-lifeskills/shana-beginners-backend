@@ -6,6 +6,7 @@ const { isValidEmail, validatePassword } = require('../utils/validation');
 
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY = '7d';
+const SELF_SERVICE_ROLES = ['student', 'instructor'];
 
 function generateAccessToken(user) {
   return jwt.sign(
@@ -50,8 +51,11 @@ function toUserResponse(user) {
 
 router.post('/register', async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, profileImage } = req.body;
+    const { firstName, lastName, email, password, profileImage, role } = req.body;
 
+    if (role !== undefined && !SELF_SERVICE_ROLES.includes(role)) {
+      return res.status(400).json({ message: 'Invalid role' });
+    }
     if (!firstName || typeof firstName !== 'string' || !firstName.trim()) {
       return res.status(400).json({ message: 'First name is required' });
     }
@@ -83,6 +87,7 @@ router.post('/register', async (req, res, next) => {
       email: email.trim().toLowerCase(),
       password,
       profileImage: profileImage && typeof profileImage === 'string' ? profileImage.trim() || null : null,
+      role: role ?? 'student',
     });
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);

@@ -15,6 +15,8 @@ const lessonRoutes = require("./src/routes/lessons");
 const userRoutes = require("./src/routes/users");
 const enrollmentRoutes = require("./src/routes/enrollments");
 const studentRoutes = require("./src/routes/students");
+const progressRoutes = require("./src/routes/progress");
+const assignmentRoutes = require("./src/routes/moduleAssignments");
 
 let openapiSpec = {};
 try {
@@ -70,6 +72,8 @@ app.use("/api/lessons", lessonRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/students", studentRoutes);
+app.use("/api/progress", progressRoutes);
+app.use("/api/assignments", assignmentRoutes);
 
 app.use(errorHandler);
 

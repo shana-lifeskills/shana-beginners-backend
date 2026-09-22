@@ -10,7 +10,10 @@
       "url": "https://api-shana-beginners.onrender.com",
       "description": "Production"
     },
-    { "url": "http://localhost:3000", "description": "Local" }
+    {
+      "url": "http://localhost:3000",
+      "description": "Local"
+    }
   ],
   "components": {
     "securitySchemes": {
@@ -23,19 +26,39 @@
     "schemas": {
       "LoginBody": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
-          "email": { "type": "string", "format": "email" },
-          "password": { "type": "string" }
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          }
         }
       },
       "RegisterBody": {
         "type": "object",
-        "required": ["firstName", "lastName", "email", "password"],
+        "required": [
+          "firstName",
+          "lastName",
+          "email",
+          "password"
+        ],
         "properties": {
-          "firstName": { "type": "string" },
-          "lastName": { "type": "string" },
-          "email": { "type": "string", "format": "email" },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
           "password": {
             "type": "string",
             "description": "At least 8 characters, one letter and one number"
@@ -44,48 +67,236 @@
             "type": "string",
             "nullable": true,
             "description": "URL or path (optional)"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "student",
+              "instructor"
+            ],
+            "description": "Defaults to student if omitted. admin cannot be self-registered."
           }
         }
       },
       "ModuleBody": {
         "type": "object",
         "properties": {
-          "title": { "type": "string" },
-          "description": { "type": "string" },
-          "thumbnail": { "type": "string" },
-          "icon": { "type": "string" },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "icon": {
+            "type": "string"
+          },
           "difficulty": {
             "type": "string",
-            "enum": ["beginner", "intermediate", "advanced"]
+            "enum": [
+              "beginner",
+              "intermediate",
+              "advanced"
+            ]
           },
-          "published": { "type": "boolean" },
-          "totalStars": { "type": "integer" },
-          "totalBadges": { "type": "integer" },
-          "totalTrophies": { "type": "integer" }
+          "published": {
+            "type": "boolean"
+          },
+          "totalStars": {
+            "type": "integer"
+          },
+          "totalBadges": {
+            "type": "integer"
+          },
+          "totalTrophies": {
+            "type": "integer"
+          }
         }
       },
       "LessonBody": {
         "type": "object",
         "properties": {
-          "title": { "type": "string" },
-          "content": { "type": "string" },
-          "videoUrl": { "type": "string" },
-          "order": { "type": "integer" },
-          "duration": { "type": "integer" },
-          "weekNumber": { "type": "integer" },
-          "totalStars": { "type": "integer" },
-          "totalBadges": { "type": "integer" },
-          "totalTrophies": { "type": "integer" }
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "videoUrl": {
+            "type": "string"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "integer"
+          },
+          "weekNumber": {
+            "type": "integer"
+          },
+          "totalStars": {
+            "type": "integer"
+          },
+          "totalBadges": {
+            "type": "integer"
+          },
+          "totalTrophies": {
+            "type": "integer"
+          }
         }
       },
       "LessonProgressBody": {
         "type": "object",
-        "required": ["progress"],
+        "required": [
+          "progress"
+        ],
         "properties": {
-          "progress": { "type": "integer", "minimum": 0, "maximum": 100 },
-          "starsEarned": { "type": "integer" },
-          "badgesEarned": { "type": "integer" },
-          "trophiesEarned": { "type": "integer" }
+          "progress": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "starsEarned": {
+            "type": "integer"
+          },
+          "badgesEarned": {
+            "type": "integer"
+          },
+          "trophiesEarned": {
+            "type": "integer"
+          }
+        }
+      },
+      "StartModuleBody": {
+        "type": "object",
+        "properties": {
+          "resumeLessonId": {
+            "type": "string"
+          },
+          "resumeExerciseId": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CompleteStepBody": {
+        "type": "object",
+        "required": [
+          "lessonId",
+          "lessonCompleted",
+          "moduleCompleted"
+        ],
+        "properties": {
+          "lessonId": {
+            "type": "string"
+          },
+          "lessonCompleted": {
+            "type": "boolean"
+          },
+          "moduleCompleted": {
+            "type": "boolean"
+          },
+          "completedExerciseIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "completedLessonIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "currentLessonId": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentExerciseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "submissionValues": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "studentName": {
+            "type": "string"
+          }
+        }
+      },
+      "AssignModuleBody": {
+        "type": "object",
+        "required": [
+          "moduleId",
+          "studentIds"
+        ],
+        "properties": {
+          "moduleId": {
+            "type": "string"
+          },
+          "studentIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "StudentModuleProgress": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "moduleId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "not-started",
+              "in-progress",
+              "completed"
+            ]
+          },
+          "completedExerciseIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "completedLessonIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "currentLessonId": {
+            "type": "string",
+            "nullable": true
+          },
+          "currentExerciseId": {
+            "type": "string",
+            "nullable": true
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
         }
       }
     }
@@ -94,514 +305,857 @@
     "/api/auth/register": {
       "post": {
         "summary": "Register",
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/RegisterBody" }
+              "schema": {
+                "$ref": "#/components/schemas/RegisterBody"
+              }
             }
           }
         },
         "responses": {
-          "201": { "description": "Created" },
-          "409": { "description": "Email already in use" }
+          "201": {
+            "description": "Created"
+          },
+          "409": {
+            "description": "Email already in use"
+          }
         }
       }
     },
     "/api/auth/login": {
       "post": {
         "summary": "Login",
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LoginBody" }
+              "schema": {
+                "$ref": "#/components/schemas/LoginBody"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "Returns accessToken and user" },
-          "401": { "description": "Invalid credentials" }
+          "200": {
+            "description": "Returns accessToken and user"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
         }
       }
     },
     "/api/auth/refresh": {
       "post": {
         "summary": "Refresh token (uses cookie)",
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "responses": {
-          "200": { "description": "New accessToken" },
-          "401": { "description": "No/invalid refresh token" }
+          "200": {
+            "description": "New accessToken"
+          },
+          "401": {
+            "description": "No/invalid refresh token"
+          }
         }
       }
     },
     "/api/auth/logout": {
       "post": {
         "summary": "Logout",
-        "tags": ["Auth"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "Cookie cleared" } }
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cookie cleared"
+          }
+        }
       }
     },
     "/api/users/me": {
       "get": {
         "summary": "Get my profile",
-        "tags": ["Users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
-          "200": { "description": "User profile" },
-          "401": { "description": "Unauthorized" }
+          "200": {
+            "description": "User profile"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
         }
       },
       "put": {
         "summary": "Update my profile",
-        "tags": ["Users"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "firstName": { "type": "string" },
-                  "lastName": { "type": "string" },
-                  "email": { "type": "string" },
-                  "profileImage": { "type": "string", "nullable": true }
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "profileImage": {
+                    "type": "string",
+                    "nullable": true
+                  }
                 }
               }
             }
           }
         },
-        "responses": { "200": { "description": "Updated user" } }
+        "responses": {
+          "200": {
+            "description": "Updated user"
+          }
+        }
       }
     },
     "/api/modules": {
       "get": {
         "summary": "List modules",
-        "tags": ["Modules"],
+        "tags": [
+          "Modules"
+        ],
         "parameters": [
           {
             "name": "published",
             "in": "query",
-            "schema": { "type": "boolean" }
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
-        "responses": { "200": { "description": "List of modules" } }
+        "responses": {
+          "200": {
+            "description": "List of modules"
+          }
+        }
       },
       "post": {
         "summary": "Create module (instructor/admin)",
-        "tags": ["Modules"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ModuleBody" }
+              "schema": {
+                "$ref": "#/components/schemas/ModuleBody"
+              }
             }
           }
         },
-        "responses": { "201": { "description": "Created" } }
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
       }
     },
     "/api/modules/{id}": {
       "get": {
         "summary": "Get module by id",
-        "tags": ["Modules"],
+        "tags": [
+          "Modules"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "put": {
         "summary": "Update module (instructor/admin)",
-        "tags": ["Modules"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/ModuleBody" }
+              "schema": {
+                "$ref": "#/components/schemas/ModuleBody"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "delete": {
         "summary": "Delete module (admin)",
-        "tags": ["Modules"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": { "description": "No content" },
-          "404": { "description": "Not found" }
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/modules/{id}/enroll": {
       "post": {
         "summary": "Enroll in module",
-        "tags": ["Modules"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/modules/{id}/lessons": {
       "get": {
         "summary": "List lessons in a module",
-        "tags": ["Modules", "Lessons"],
+        "tags": [
+          "Modules",
+          "Lessons"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/modules/{moduleId}/lessons": {
       "post": {
         "summary": "Create lesson in module (instructor/admin)",
-        "tags": ["Modules", "Lessons"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules",
+          "Lessons"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "moduleId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LessonBody" }
+              "schema": {
+                "$ref": "#/components/schemas/LessonBody"
+              }
             }
           }
         },
         "responses": {
-          "201": { "description": "Created" },
-          "404": { "description": "Module not found" }
+          "201": {
+            "description": "Created"
+          },
+          "404": {
+            "description": "Module not found"
+          }
         }
       }
     },
     "/api/modules/{id}/students": {
       "get": {
         "summary": "Get enrolled students (instructor/admin)",
-        "tags": ["Modules"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Modules"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/lessons/{id}": {
       "get": {
         "summary": "Get lesson by id",
-        "tags": ["Lessons"],
+        "tags": [
+          "Lessons"
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "put": {
         "summary": "Update lesson (instructor/admin)",
-        "tags": ["Lessons"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Lessons"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LessonBody" }
+              "schema": {
+                "$ref": "#/components/schemas/LessonBody"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "delete": {
         "summary": "Delete lesson (instructor/admin)",
-        "tags": ["Lessons"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Lessons"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": { "description": "No content" },
-          "404": { "description": "Not found" }
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/students": {
       "get": {
         "summary": "List students (instructor/admin)",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "List of students" } }
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of students"
+          }
+        }
       }
     },
     "/api/students/{id}": {
       "get": {
         "summary": "Get student by id",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "put": {
         "summary": "Update student",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "delete": {
         "summary": "Delete student (admin)",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": { "description": "No content" },
-          "404": { "description": "Not found" }
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/students/{id}/modules": {
       "get": {
         "summary": "Get student's enrolled modules",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/students/{id}/lessons": {
       "get": {
         "summary": "Get student's lesson progress",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "moduleId",
             "in": "query",
-            "schema": { "type": "string" },
+            "schema": {
+              "type": "string"
+            },
             "description": "Filter by module"
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/students/{studentId}/lessons/{lessonId}": {
       "put": {
         "summary": "Update student lesson progress",
-        "tags": ["Students", "Progress"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students",
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "studentId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           },
           {
             "name": "lessonId",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
-              "schema": { "$ref": "#/components/schemas/LessonProgressBody" }
+              "schema": {
+                "$ref": "#/components/schemas/LessonProgressBody"
+              }
             }
           }
         },
         "responses": {
-          "200": { "description": "OK" },
-          "400": { "description": "Validation error" },
-          "422": { "description": "Previous lesson not completed" }
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "422": {
+            "description": "Previous lesson not completed"
+          }
         }
       }
     },
     "/api/students/{id}/progress/summary": {
       "get": {
         "summary": "Get student progress summary",
-        "tags": ["Students", "Progress"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students",
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
-        "responses": { "200": { "description": "OK" } }
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/students/{id}/stats": {
       "get": {
         "summary": "Get student stats",
-        "tags": ["Students"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Students"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       }
     },
     "/api/enrollments": {
       "get": {
         "summary": "My enrollments",
-        "tags": ["Enrollments"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "OK" } }
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/enrollments/{id}": {
       "get": {
         "summary": "Get enrollment",
-        "tags": ["Enrollments"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "put": {
         "summary": "Update enrollment (e.g. progress)",
-        "tags": ["Enrollments"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -621,25 +1175,446 @@
           }
         },
         "responses": {
-          "200": { "description": "OK" },
-          "404": { "description": "Not found" }
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not found"
+          }
         }
       },
       "delete": {
         "summary": "Unenroll",
-        "tags": ["Enrollments"],
-        "security": [{ "bearerAuth": [] }],
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "string" }
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "204": { "description": "No content" },
-          "404": { "description": "Not found" }
+          "204": {
+            "description": "No content"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/progress/{moduleId}/start": {
+      "post": {
+        "summary": "Start or resume a student's progress in a module",
+        "tags": [
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StartModuleBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentModuleProgress"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/progress/{moduleId}/steps/{exerciseId}/complete": {
+      "post": {
+        "summary": "Record the client-computed outcome of completing one exercise step",
+        "tags": [
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exerciseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteStepBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/progress/{moduleId}/stars/{exerciseId}": {
+      "post": {
+        "summary": "Idempotently award a standalone star for one exercise",
+        "tags": [
+          "Progress",
+          "Gamification"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exerciseId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/progress": {
+      "get": {
+        "summary": "List a student's progress across all started modules",
+        "tags": [
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentModuleProgress"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/progress/{moduleId}": {
+      "get": {
+        "summary": "Get a student's progress for one module",
+        "tags": [
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "studentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentModuleProgress"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/progress/submissions": {
+      "get": {
+        "summary": "Get all students' submissions for one exercise (a shared discussion board, not scoped to the caller)",
+        "tags": [
+          "Progress"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "exerciseId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/progress/rewards/totals": {
+      "get": {
+        "summary": "Get a student's star/badge/trophy totals",
+        "tags": [
+          "Gamification"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/progress/rewards/details": {
+      "get": {
+        "summary": "Get a student's earned badge/trophy history",
+        "tags": [
+          "Gamification"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/progress/rewards/stars-this-week": {
+      "get": {
+        "summary": "Get how many stars a student earned in the last 7 days",
+        "tags": [
+          "Gamification"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/assignments": {
+      "post": {
+        "summary": "Assign a module to one or more students",
+        "tags": [
+          "Assignments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignModuleBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/assignments/batch": {
+      "get": {
+        "summary": "Get assigned module ids for multiple students at once",
+        "tags": [
+          "Assignments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentIds",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/assignments/{studentId}": {
+      "get": {
+        "summary": "Get the module ids assigned to one student",
+        "tags": [
+          "Assignments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "studentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
         }
       }
     }
