@@ -17,6 +17,7 @@ const enrollmentRoutes = require("./src/routes/enrollments");
 const studentRoutes = require("./src/routes/students");
 const progressRoutes = require("./src/routes/progress");
 const assignmentRoutes = require("./src/routes/moduleAssignments");
+const paymentRoutes = require("./src/routes/payments");
 
 let openapiSpec = {};
 try {
@@ -56,6 +57,10 @@ app.use(
 );
 app.use(cookieParser());
 app.use(morgan("dev"));
+// Paystack's webhook signature is computed over the raw body, so this one path
+// must see it as an unparsed Buffer — registered ahead of the global JSON
+// parser, which skips paths body-parser has already consumed.
+app.use("/api/payments/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 app.use(
@@ -74,6 +79,7 @@ app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/assignments", assignmentRoutes);
+app.use("/api/payments", paymentRoutes);
 
 app.use(errorHandler);
 

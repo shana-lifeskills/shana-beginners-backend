@@ -5,7 +5,7 @@ const { authenticate } = require('../middleware/auth');
 router.get('/me', authenticate, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'firstName', 'lastName', 'email', 'profileImage', 'role', 'stars', 'badges', 'trophies', 'modulesCompleted'],
+      attributes: ['id', 'firstName', 'lastName', 'email', 'profileImage', 'role', 'stars', 'badges', 'trophies', 'modulesCompleted', 'hasPaid'],
     });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -21,6 +21,7 @@ router.get('/me', authenticate, async (req, res, next) => {
       badges: user.badges,
       trophies: user.trophies,
       modulesCompleted: user.modulesCompleted,
+      hasPaid: user.hasPaid,
     });
   } catch (err) {
     next(err);
@@ -50,6 +51,7 @@ router.put('/me', authenticate, async (req, res, next) => {
       badges: user.badges,
       trophies: user.trophies,
       modulesCompleted: user.modulesCompleted,
+      hasPaid: user.hasPaid,
     });
   } catch (err) {
     next(err);

@@ -6,7 +6,10 @@ const { isValidEmail, validatePassword } = require('../utils/validation');
 
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY = '7d';
-const SELF_SERVICE_ROLES = ['student', 'instructor'];
+// 'instructor' is still a valid role in the DB/enum for a future distinct
+// trainer role, but self-registration currently only ever creates a student
+// or an admin (admins upload/assign modules; trainer requirements TBD).
+const SELF_SERVICE_ROLES = ['student', 'admin'];
 
 function generateAccessToken(user) {
   return jwt.sign(
@@ -46,6 +49,7 @@ function toUserResponse(user) {
     badges: user.badges,
     trophies: user.trophies,
     modulesCompleted: user.modulesCompleted,
+    hasPaid: user.hasPaid,
   };
 }
 

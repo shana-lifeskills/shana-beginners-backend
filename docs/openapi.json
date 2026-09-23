@@ -298,6 +298,90 @@
             "nullable": true
           }
         }
+      },
+      "InitializePaymentResponse": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "publicKey": {
+            "type": "string"
+          },
+          "amountPesewas": {
+            "type": "integer"
+          }
+        }
+      },
+      "VerifyPaymentBody": {
+        "type": "object",
+        "required": [
+          "reference"
+        ],
+        "properties": {
+          "reference": {
+            "type": "string"
+          }
+        }
+      },
+      "InitiateMobileMoneyBody": {
+        "type": "object",
+        "required": [
+          "phone",
+          "provider"
+        ],
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "0241234567"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "mtn",
+              "vod",
+              "atl"
+            ],
+            "description": "mtn=MTN, vod=Telecel, atl=AirtelTigo"
+          }
+        }
+      },
+      "InitiateMobileMoneyResponse": {
+        "type": "object",
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "send_otp",
+              "pay_offline"
+            ]
+          },
+          "displayText": {
+            "type": "string"
+          },
+          "hasPaid": {
+            "type": "boolean"
+          }
+        }
+      },
+      "SubmitMobileMoneyOtpBody": {
+        "type": "object",
+        "required": [
+          "reference",
+          "otp"
+        ],
+        "properties": {
+          "reference": {
+            "type": "string"
+          },
+          "otp": {
+            "type": "string"
+          }
+        }
       }
     }
   },
@@ -1611,6 +1695,138 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/payments/initialize": {
+      "post": {
+        "summary": "Create a pending payment and get a Paystack reference to check out with",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitializePaymentResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payments/verify": {
+      "post": {
+        "summary": "Verify a completed Paystack checkout and, on success, mark the student paid",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyPaymentBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/payments/webhook": {
+      "post": {
+        "summary": "Paystack server-to-server webhook (signature-verified, not JWT-authenticated)",
+        "tags": [
+          "Payments"
+        ],
+        "responses": {
+          "200": {
+            "description": "Acknowledged"
+          },
+          "401": {
+            "description": "Invalid signature"
+          }
+        }
+      }
+    },
+    "/api/payments/mobile-money/initiate": {
+      "post": {
+        "summary": "Start an MTN/Telecel/AirtelTigo mobile money charge",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitiateMobileMoneyBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InitiateMobileMoneyResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payments/mobile-money/submit-otp": {
+      "post": {
+        "summary": "Submit the one-time code for a mobile money charge that returned send_otp",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitMobileMoneyOtpBody"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"

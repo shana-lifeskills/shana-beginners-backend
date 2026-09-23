@@ -50,6 +50,13 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
+  // TEMPORARY DEMO BYPASS: defaults every new account to already-paid, so the
+  // payment step never blocks anyone during demos. Revert to `false` once
+  // real Paystack keys are in place and the payment step should gate again.
+  hasPaid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
 }, {
   hooks: {
     beforeCreate: async (user) => {

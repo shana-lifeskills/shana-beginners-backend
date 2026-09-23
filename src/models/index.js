@@ -10,6 +10,7 @@ const StarLog = require('./StarLog');
 const BadgeLog = require('./BadgeLog');
 const TrophyLog = require('./TrophyLog');
 const ModuleAssignment = require('./ModuleAssignment');
+const Payment = require('./Payment');
 
 Module.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
 User.hasMany(Module, { foreignKey: 'instructorId' });
@@ -51,6 +52,9 @@ ModuleAssignment.belongsTo(User, { as: 'student', foreignKey: 'userId' });
 ModuleAssignment.belongsTo(User, { as: 'assignedBy', foreignKey: 'assignedByUserId' });
 User.hasMany(ModuleAssignment, { foreignKey: 'userId' });
 
+Payment.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Payment, { foreignKey: 'userId' });
+
 module.exports = {
   sequelize,
   User,
@@ -64,4 +68,5 @@ module.exports = {
   BadgeLog,
   TrophyLog,
   ModuleAssignment,
+  Payment,
 };
