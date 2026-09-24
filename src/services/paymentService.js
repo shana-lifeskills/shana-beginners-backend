@@ -11,10 +11,24 @@ const COURSE_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.COURSE_ACCESS_AMOUNT_P
  *  hasn't changed on Paystack's side. */
 const MOBILE_MONEY_PROVIDERS = ['mtn', 'vod', 'atl'];
 
+// TEMPORARY DEMO BYPASS: the placeholder values shipped in .env until real
+// Paystack keys are added. Treating these as "no real key" (not just an
+// empty/missing one) means the demo bypass stays active while the dummy
+// values are in place, and turns itself off the moment real keys replace
+// them — nothing else needs to change when that happens.
+const DUMMY_KEY_VALUES = new Set(['sk_test_dummy_replace_me', 'pk_test_dummy_replace_me']);
+
+function isDemoMode() {
+  const key = process.env.PAYSTACK_SECRET_KEY;
+  return !key || DUMMY_KEY_VALUES.has(key);
+}
+
 class PaymentService {
   /** Creates a pending Payment row with a server-generated reference the client
    *  will pass into Paystack Inline — verify() only ever trusts a reference
-   *  this service itself issued. */
+   *  this service itself issued. In demo mode, `publicKey` is omitted so the
+   *  frontend shows its own mock card form instead of Paystack's real popup
+   *  (which would reject a dummy key immediately, before any card details). */
   async initializePayment(userId) {
     const reference = `shana_${crypto.randomUUID()}`;
     await Payment.create({
@@ -29,7 +43,7 @@ class PaymentService {
     return {
       reference,
       amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
-      publicKey: process.env.PAYSTACK_PUBLIC_KEY,
+      publicKey: isDemoMode() ? undefined : process.env.PAYSTACK_PUBLIC_KEY,
     };
   }
 
@@ -38,7 +52,7 @@ class PaymentService {
    * phone number. Unlike card checkout, this doesn't go through Paystack
    * Inline — the backend talks to Paystack's Charge API directly and the
    * response tells the frontend what to show next:
-   *  - 'success': already done (rare, but possible).
+   *  - 'success': already done (rare, but possible; always true in demo mode).
    *  - 'send_otp': the frontend must collect a one-time code and call
    *    submitMobileMoneyOtp() with it.
    *  - 'pay_offline': the customer approves a prompt on their own phone —
@@ -64,10 +78,11 @@ class PaymentService {
       status: 'pending',
     });
 
-    // TEMPORARY DEMO BYPASS: same as card checkout — with no real Paystack
-    // keys configured, there's nothing to actually charge. Auto-succeed so
-    // the flow can be demoed end-to-end. Remove once PAYSTACK_SECRET_KEY is set.
-    if (!process.env.PAYSTACK_SECRET_KEY) {
+    // TEMPORARY DEMO BYPASS: the phone number was still genuinely collected
+    // above — this only replaces the real Paystack Charge API call once the
+    // customer has "sent the request", not the whole flow. Remove once real
+    // Paystack keys replace the dummy placeholder values.
+    if (isDemoMode()) {
       await this._markSuccess(payment);
       return { reference, status: 'success', hasPaid: true, demo: true };
     }
@@ -129,7 +144,8 @@ class PaymentService {
    * the same reference; the second call is a no-op once the first succeeds.
    * Also what a mobile money `pay_offline` charge is polled against, since
    * Paystack's transaction-verify endpoint covers Charge API transactions
-   * the same way it covers Inline ones.
+   * the same way it covers Inline ones. Also what the frontend's mock card
+   * form calls once the customer "submits" their (fake) card details.
    *
    * `expectedUserId`, when given (the client-verify path), enforces that a
    * student can only verify their own payment. The webhook path omits it —
@@ -147,11 +163,10 @@ class PaymentService {
       return { hasPaid: true };
     }
 
-    // TEMPORARY DEMO BYPASS: no real Paystack keys are configured yet, so there's
-    // nothing to actually verify against. Auto-succeed instead of calling Paystack,
-    // so the rest of the (real) flow — entitlement, trainer assignment — can be
-    // demoed end-to-end. Remove this branch once PAYSTACK_SECRET_KEY is set.
-    if (!process.env.PAYSTACK_SECRET_KEY) {
+    // TEMPORARY DEMO BYPASS: see isDemoMode() above. Auto-succeed instead of
+    // calling Paystack, so the rest of the (real) flow — entitlement, trainer
+    // assignment — can be demoed end-to-end with the real placeholder UI still shown.
+    if (isDemoMode()) {
       await this._markSuccess(payment);
       return { hasPaid: true, demo: true };
     }
