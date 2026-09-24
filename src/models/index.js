@@ -11,6 +11,8 @@ const BadgeLog = require('./BadgeLog');
 const TrophyLog = require('./TrophyLog');
 const ModuleAssignment = require('./ModuleAssignment');
 const Payment = require('./Payment');
+const Task = require('./Task');
+const TaskSubmission = require('./TaskSubmission');
 
 Module.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
 User.hasMany(Module, { foreignKey: 'instructorId' });
@@ -55,6 +57,15 @@ User.hasMany(ModuleAssignment, { foreignKey: 'userId' });
 Payment.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Payment, { foreignKey: 'userId' });
 
+Task.belongsTo(User, { as: 'createdBy', foreignKey: 'createdByUserId' });
+User.hasMany(Task, { foreignKey: 'createdByUserId' });
+
+TaskSubmission.belongsTo(Task, { foreignKey: 'taskId' });
+Task.hasMany(TaskSubmission, { foreignKey: 'taskId' });
+TaskSubmission.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
+TaskSubmission.belongsTo(User, { as: 'reviewedBy', foreignKey: 'reviewedByUserId' });
+User.hasMany(TaskSubmission, { foreignKey: 'studentId' });
+
 module.exports = {
   sequelize,
   User,
@@ -69,4 +80,6 @@ module.exports = {
   TrophyLog,
   ModuleAssignment,
   Payment,
+  Task,
+  TaskSubmission,
 };

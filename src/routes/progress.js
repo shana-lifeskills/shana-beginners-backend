@@ -104,6 +104,14 @@ router.get('/rewards/totals', async (req, res, next) => {
   }
 });
 
+router.get('/rewards/totals-all', authorize(...PRIVILEGED_ROLES), async (req, res, next) => {
+  try {
+    res.json(await studentProgressService.getRewardTotalsAcrossAllStudents());
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/rewards/details', async (req, res, next) => {
   try {
     const userId = resolveTargetUserId(req);

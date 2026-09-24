@@ -195,6 +195,18 @@ class StudentProgressService {
     return { stars, badges, trophies };
   }
 
+  /** Sums stars/badges/trophies across every student — powers the trainer
+   *  dashboard's stat cards, reusing the same log tables real per-student
+   *  totals already come from. */
+  async getRewardTotalsAcrossAllStudents() {
+    const [stars, badges, trophies] = await Promise.all([
+      StarLog.count(),
+      BadgeLog.count(),
+      TrophyLog.count(),
+    ]);
+    return { stars, badges, trophies };
+  }
+
   async getRewardDetails(userId) {
     if (!UUID_RE.test(userId)) return { totals: { stars: 0, badges: 0, trophies: 0 }, badges: [], trophies: [] };
     const [totals, badges, trophies] = await Promise.all([
