@@ -2,9 +2,9 @@ const crypto = require('crypto');
 const { sequelize, Payment, User } = require('../models');
 const paystackClient = require('./paystackClient');
 
-/** GH₵500.00 placeholder course-access price — server-owned, never trusted from the
+/** GH₵399.00 course-access price — server-owned, never trusted from the
  *  client. Overridable via env so pricing can change without a code deploy. */
-const COURSE_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.COURSE_ACCESS_AMOUNT_PESEWAS, 10) || 50000;
+const COURSE_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.COURSE_ACCESS_AMOUNT_PESEWAS, 10) || 39900;
 
 /** Paystack's Ghana mobile money provider codes — 'vod' is Paystack's (legacy
  *  Vodafone Cash) code for what's now branded Telecel Cash; the code itself
