@@ -183,6 +183,16 @@ router.post('/login', async (req, res, next) => {
     if (!user || !(await user.validatePassword(password))) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    if (!user.emailVerified) {
+      // Correct credentials, but the account is locked out of signing in
+      // again until it's verified — send a fresh link on every blocked
+      // attempt so a stale/lost first email doesn't strand the user.
+      await issueAndSendVerificationEmail(user);
+      return res.status(403).json({
+        message: 'Please verify your email before signing in — we just sent a new link to your inbox.',
+        code: 'EMAIL_NOT_VERIFIED',
+      });
+    }
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
     setRefreshTokenCookie(res, refreshToken);
