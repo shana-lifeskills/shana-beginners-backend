@@ -19,6 +19,10 @@ const progressRoutes = require("./src/routes/progress");
 const assignmentRoutes = require("./src/routes/moduleAssignments");
 const paymentRoutes = require("./src/routes/payments");
 const taskRoutes = require("./src/routes/tasks");
+const paymentReminderRoutes = require("./src/routes/paymentReminders");
+
+const cron = require("node-cron");
+const paymentReminderService = require("./src/services/paymentReminderService");
 
 let openapiSpec = {};
 try {
@@ -82,6 +86,7 @@ app.use("/api/progress", progressRoutes);
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/payment-reminders", paymentReminderRoutes);
 
 app.use(errorHandler);
 
@@ -92,6 +97,16 @@ async function start() {
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+    });
+
+    // Daily at 08:00 server time: emails any student still unpaid once the
+    // month is close to ending (see paymentReminderService for the window/
+    // dedupe logic). Can also be triggered on demand via POST
+    // /api/payment-reminders/run.
+    cron.schedule("0 8 * * *", () => {
+      paymentReminderService.sendMonthEndPaymentReminders().catch((err) => {
+        console.error("[paymentReminderService] Scheduled run failed:", err);
+      });
     });
   } catch (error) {
     console.error("Unable to start server:", error);

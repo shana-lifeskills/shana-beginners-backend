@@ -2022,6 +2022,27 @@
           }
         }
       }
+    },
+    "/api/payment-reminders/run": {
+      "post": {
+        "summary": "Manually run the month-end unpaid-student email reminder (trainer/admin) — same check a daily cron also runs on its own",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
     }
   }
 }

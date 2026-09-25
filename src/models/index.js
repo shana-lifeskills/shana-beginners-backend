@@ -13,6 +13,7 @@ const ModuleAssignment = require('./ModuleAssignment');
 const Payment = require('./Payment');
 const Task = require('./Task');
 const TaskSubmission = require('./TaskSubmission');
+const PaymentReminderLog = require('./PaymentReminderLog');
 
 Module.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
 User.hasMany(Module, { foreignKey: 'instructorId' });
@@ -66,6 +67,9 @@ TaskSubmission.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
 TaskSubmission.belongsTo(User, { as: 'reviewedBy', foreignKey: 'reviewedByUserId' });
 User.hasMany(TaskSubmission, { foreignKey: 'studentId' });
 
+PaymentReminderLog.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
+User.hasMany(PaymentReminderLog, { foreignKey: 'studentId' });
+
 module.exports = {
   sequelize,
   User,
@@ -82,4 +86,5 @@ module.exports = {
   Payment,
   Task,
   TaskSubmission,
+  PaymentReminderLog,
 };
