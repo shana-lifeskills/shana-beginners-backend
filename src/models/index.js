@@ -1,9 +1,8 @@
 const sequelize = require('../config/database');
 const User = require('./User');
-const Module = require('./Module');
-const Lesson = require('./Lesson');
-const Enrollment = require('./Enrollment');
-const StudentLesson = require('./StudentLesson');
+const CurriculumModule = require('./CurriculumModule');
+const CurriculumLesson = require('./CurriculumLesson');
+const CurriculumExercise = require('./CurriculumExercise');
 const StudentModuleProgress = require('./StudentModuleProgress');
 const StudentSubmission = require('./StudentSubmission');
 const StarLog = require('./StarLog');
@@ -14,27 +13,17 @@ const Payment = require('./Payment');
 const Task = require('./Task');
 const TaskSubmission = require('./TaskSubmission');
 
-Module.belongsTo(User, { as: 'instructor', foreignKey: 'instructorId' });
-User.hasMany(Module, { foreignKey: 'instructorId' });
+// Curriculum: CurriculumModule is the source of truth; lessons/exercises are derived lookups.
+CurriculumModule.belongsTo(User, { as: 'createdBy', foreignKey: 'createdByUserId' });
+CurriculumModule.hasMany(CurriculumLesson, { as: 'lessonIndex', foreignKey: 'moduleId' });
+CurriculumLesson.belongsTo(CurriculumModule, { foreignKey: 'moduleId' });
+CurriculumModule.hasMany(CurriculumExercise, { as: 'exerciseIndex', foreignKey: 'moduleId' });
+CurriculumLesson.hasMany(CurriculumExercise, { foreignKey: 'lessonId' });
+CurriculumExercise.belongsTo(CurriculumLesson, { foreignKey: 'lessonId' });
+CurriculumExercise.belongsTo(CurriculumModule, { foreignKey: 'moduleId' });
 
-Module.hasMany(Lesson, { foreignKey: 'moduleId', onDelete: 'CASCADE' });
-Lesson.belongsTo(Module, { foreignKey: 'moduleId' });
-
-User.belongsToMany(Module, { through: Enrollment, as: 'enrolledModules', foreignKey: 'userId' });
-Module.belongsToMany(User, { through: Enrollment, as: 'students', foreignKey: 'moduleId' });
-Enrollment.belongsTo(User, { foreignKey: 'userId' });
-Enrollment.belongsTo(Module, { foreignKey: 'moduleId' });
-User.hasMany(Enrollment, { foreignKey: 'userId' });
-Module.hasMany(Enrollment, { foreignKey: 'moduleId' });
-
-StudentLesson.belongsTo(User, { foreignKey: 'userId' });
-StudentLesson.belongsTo(Lesson, { foreignKey: 'lessonId' });
-User.hasMany(StudentLesson, { foreignKey: 'userId' });
-Lesson.hasMany(StudentLesson, { foreignKey: 'lessonId' });
-
-// Progress/gamification/assignment tables for the frontend's real (string-id) curriculum.
-// These are intentionally separate from the UUID Module/Lesson/Enrollment/StudentLesson
-// system above, which models a different, unused content shape.
+// Per-student progress/gamification/assignment state. moduleId/lessonId/exerciseId are
+// the curriculum's string ids.
 StudentModuleProgress.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(StudentModuleProgress, { foreignKey: 'userId' });
 
@@ -69,10 +58,9 @@ User.hasMany(TaskSubmission, { foreignKey: 'studentId' });
 module.exports = {
   sequelize,
   User,
-  Module,
-  Lesson,
-  Enrollment,
-  StudentLesson,
+  CurriculumModule,
+  CurriculumLesson,
+  CurriculumExercise,
   StudentModuleProgress,
   StudentSubmission,
   StarLog,

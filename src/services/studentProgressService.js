@@ -7,9 +7,34 @@ const {
   BadgeLog,
   TrophyLog,
   ModuleAssignment,
+  CurriculumModule,
+  CurriculumLesson,
+  CurriculumExercise,
 } = require('../models');
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const httpError = (status, message) => Object.assign(new Error(message), { status });
+
+/**
+ * Rejects ids that aren't in the curriculum before anything is written, so a bad id gets
+ * a clear 404/400 instead of tripping a foreign key and surfacing as a 500.
+ * `activeOnly`: starting a module requires it to be live; finishing work in a module
+ * that was archived mid-lesson is still allowed, so no child loses a step.
+ */
+async function assertModule(moduleId, { activeOnly }) {
+  const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'archivedAt'] });
+  if (!mod || (activeOnly && mod.archivedAt !== null)) throw httpError(404, 'Module not found');
+}
+
+async function assertStep(moduleId, lessonId, exerciseId) {
+  const [lesson, exercise] = await Promise.all([
+    CurriculumLesson.findOne({ where: { id: lessonId, moduleId }, attributes: ['id'] }),
+    CurriculumExercise.findOne({ where: { id: exerciseId, lessonId, moduleId }, attributes: ['id'] }),
+  ]);
+  if (!lesson) throw httpError(400, `Lesson "${lessonId}" is not part of module "${moduleId}"`);
+  if (!exercise) throw httpError(400, `Exercise "${exerciseId}" is not part of lesson "${lessonId}"`);
+}
 
 /**
  * Server-side counterpart to the frontend's ProgressService/GamificationService, for the
@@ -25,6 +50,7 @@ class StudentProgressService {
    *  null currentLessonId/currentExerciseId (e.g. content was edited after the student
    *  started with nothing to resume into). */
   async startOrResumeModule(userId, moduleId, { resumeLessonId, resumeExerciseId }) {
+    await assertModule(moduleId, { activeOnly: true });
     const [progress, created] = await StudentModuleProgress.findOrCreate({
       where: { userId, moduleId },
       defaults: {
@@ -75,6 +101,8 @@ class StudentProgressService {
     if (!lessonId) {
       throw Object.assign(new Error('lessonId is required'), { status: 400 });
     }
+    await assertModule(moduleId, { activeOnly: false });
+    await assertStep(moduleId, lessonId, exerciseId);
 
     const transaction = await sequelize.transaction();
     try {
@@ -139,6 +167,8 @@ class StudentProgressService {
   // --- Standalone gamification (used e.g. by story-tabs sub-questions) ---
 
   async awardStar(userId, moduleId, exerciseId) {
+    // exerciseId isn't checked: story-tabs awards bonus stars against synthetic ids.
+    await assertModule(moduleId, { activeOnly: false });
     const awarded = await this._awardStar(userId, moduleId, exerciseId);
     return { awarded };
   }

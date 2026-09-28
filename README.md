@@ -53,7 +53,79 @@ Node.js/Express API for an e-learning platform. Uses PostgreSQL with Sequelize, 
   npm start
   ```
 
-The server listens on `PORT` (default 3000). On startup it runs pending [Sequelize migrations](#database-and-migrations) so the schema stays up to date.
+The server listens on `PORT` (default 3000). It does **not** run migrations on startup — run `npm run db:setup` after pulling schema or curriculum changes.
+
+## First-time setup and after every pull
+
+```bash
+npm run db:setup      # migrations + curriculum load, in the right order (safe to re-run)
+npm run db:seed:demo  # optional: demo accounts for local testing (refuses NODE_ENV=production)
+```
+
+`db:setup` runs the migrations up to the curriculum tables, loads the curriculum, then
+runs the rest (the curriculum foreign keys need the curriculum loaded first). Running it
+again is a no-op when nothing changed.
+
+### Demo accounts (`npm run db:seed:demo`)
+
+| Role in the app | Email | Password | Notes |
+|---|---|---|---|
+| Admin (backend role `admin`) | trainer@shana.dev | Trainer123 | Uploads and assigns modules |
+| Trainer (backend role `instructor`) | coach@shana.dev | Coach1234 | Reviews submissions, tracks progress |
+| Student, beginner | ava@shana.dev | Ava12345 | All 24 beginner modules assigned |
+| Student, advanced | leo@shana.dev | Leo12345 | All 3 advanced modules assigned |
+
+## Curriculum
+
+The curriculum (modules, lessons, exercises) is authored in the frontend repo and
+exported here as **`db/curriculum/curriculum.json`**:
+
+```bash
+# in shana-e-learning-beginners
+npm run export:curriculum
+# then here
+npm run db:seed:curriculum -- --dry-run   # preview what would change
+npm run db:seed:curriculum                # apply
+```
+
+It is stored in three tables:
+
+- **`CurriculumModules`** — the source of truth: one row per module, with `lessons` holding
+  the frontend's `Lesson[]` exactly as authored (JSONB). `source` is `curriculum` (from the
+  export) or `admin` (built in the app); the seed never touches `admin` modules.
+- **`CurriculumLessons`**, **`CurriculumExercises`** — lookup rows derived from `lessons`
+  on every write (never edit them by hand). They enforce that lesson and exercise ids are
+  unique across the whole curriculum, and give progress, reward and submission rows a
+  real foreign key target.
+
+Content that disappears from the export is **archived** (`archivedAt`), never deleted, so
+students keep the progress and rewards they earned. Changed content gets a new `version`;
+a module that only moved in the list does not. The seed runs in one transaction and
+refuses the whole file — writing nothing — if anything is invalid, listing every problem.
+
+`StarLogs.exerciseId` intentionally has no foreign key: the story-tabs activity awards
+bonus stars against synthetic ids (`<questionId>__starter`).
+
+## Staff accounts
+
+Public signup creates **students only**. Create Admin and Trainer accounts with:
+
+```bash
+npm run staff:create -- --email jo@school.org --first Jo --last Mensah --role admin
+npm run staff:create -- --email kofi@school.org --first Kofi --last Boateng --role trainer
+```
+
+The password comes from `STAFF_PASSWORD` if set; otherwise a strong one is generated and
+printed once.
+
+## Tests
+
+```bash
+npm run test:curriculum   # curriculum store, foreign keys, signup rules, demo logins (needs the server running)
+npm run test:auth         # register/login/refresh flow
+```
+
+`test:curriculum` rolls back everything it writes and deletes the one account it creates.
 
 ## Database and migrations
 
@@ -61,11 +133,12 @@ Schema and new tables are managed with Sequelize migrations (no `sync`).
 
 - **`db/config.js`** — Database config for the CLI (reads from `.env`).
 - **`db/migrations/`** — Migration files. New tables or columns go here.
-- **`db/seeders/`** — Optional seed data.
+- **`db/curriculum/`** — Curriculum export loaded by `npm run db:seed:curriculum`.
+- **`backups/`** — Local `pg_dump` backups (git-ignored — they contain password hashes).
 
 **Commands**
 
-- Run pending migrations (also runs automatically on `npm start`):
+- Run pending migrations (prefer `npm run db:setup`, which also loads the curriculum):
   ```bash
   npm run db:migrate
   ```
@@ -87,11 +160,16 @@ If the database already has tables from an older setup, either run migrations on
 
 ## API Overview
 
-- **Auth:** `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`
-- **Courses:** `GET/POST /api/courses`, `GET/PUT/DELETE /api/courses/:id`, `POST /api/courses/:id/enroll`
-- **Lessons:** `GET/POST /api/courses/:courseId/lessons`, `GET/PUT/DELETE /api/courses/:courseId/lessons/:id`
-- **Enrollments:** `GET /api/enrollments` (my enrollments), `GET /api/enrollments/:id`, `PUT /api/enrollments/:id` (e.g. progress), `DELETE /api/enrollments/:id` (unenroll)
+- **Auth:** `POST /api/auth/register` (students only), `POST /api/auth/login`, `POST /api/auth/refresh`, `POST /api/auth/logout`, `GET /api/auth/verify-email`, `POST /api/auth/resend-verification`
 - **Users:** `GET /api/users/me`, `PUT /api/users/me`
+- **Students:** `GET /api/students`, `GET/PUT/DELETE /api/students/:id`
+- **Progress & rewards:** `/api/progress/*`
+- **Assignments:** `/api/assignments/*`
+- **Tasks:** `/api/tasks/*`
+- **Payments:** `/api/payments/*`
+
+Curriculum read/write endpoints (`/api/modules`) arrive in the next phase. The full,
+current list is in `docs/openapi.json` (served at `/docs`).
 
 Use the `Authorization: Bearer <accessToken>` header for protected routes. The refresh token is sent via an HTTP-only cookie and used by `POST /api/auth/refresh`.
 

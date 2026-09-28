@@ -10,9 +10,13 @@
     "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
     "db:migrate:status": "npx sequelize-cli db:migrate:status",
     "db:migrate:generate": "npx sequelize-cli migration:generate --name",
+    "db:setup": "npx sequelize-cli db:migrate --to 20260925000003-drop-legacy-content-tables.js && node scripts/seed-curriculum.js && npx sequelize-cli db:migrate",
+    "db:seed:curriculum": "node scripts/seed-curriculum.js",
+    "db:seed:demo": "node scripts/seed-demo-accounts.js",
+    "staff:create": "node scripts/create-staff.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:auth": "node scripts/test-auth.js",
-    "test:modules": "node scripts/test-modules.js"
+    "test:curriculum": "node scripts/test-curriculum.js"
   },
   "repository": {
     "type": "git",

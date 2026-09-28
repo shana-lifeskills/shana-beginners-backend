@@ -27,7 +27,37 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
   profileImage: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  ageGroup: {
+    type: DataTypes.ENUM('beginner', 'advanced'),
+    allowNull: false,
+    defaultValue: 'beginner',
+  },
+  avatarId: {
     type: DataTypes.STRING,
+    allowNull: true,
+  },
+  /** Profile photo chosen at signup, stored as a data URL — takes priority over avatarId. */
+  avatarUrl: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  hasSeenWelcome: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  /** Consecutive calendar days with at least one session. */
+  streakCount: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 0,
+  },
+  /** YYYY-MM-DD of the last session start, used to compute streakCount. */
+  lastActiveDate: {
+    type: DataTypes.DATEONLY,
     allowNull: true,
   },
   role: {

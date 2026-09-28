@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const { authenticate } = require('../middleware/auth');
 const { isValidEmail, validatePassword } = require('../utils/validation');
+const { toUserResponse, touchStreak, AGE_GROUPS, AVATAR_IDS } = require('../utils/userResponse');
 const { sendVerificationEmail } = require('../services/emailService');
 
 const ACCESS_TOKEN_EXPIRY = '15m';
@@ -11,7 +12,12 @@ const EMAIL_VERIFICATION_EXPIRY = '24h';
 // 'instructor' is the real Trainer role (displayed as "Trainer" in the UI) —
 // reviews assignment submissions and tracks student progress. 'admin' is the
 // separate, earlier-built role that uploads/assigns modules.
-const SELF_SERVICE_ROLES = ['student', 'admin', 'instructor'];
+//
+// Only students may self-register. Staff roles can create modules and see children's
+// data, so they are created by an administrator (scripts/create-staff.js), never
+// from the public signup form.
+const SELF_SERVICE_ROLES = ['student'];
+const STAFF_ROLES = ['admin', 'instructor'];
 
 function generateAccessToken(user) {
   return jwt.sign(
@@ -59,29 +65,21 @@ function setRefreshTokenCookie(res, token) {
   });
 }
 
-function toUserResponse(user) {
-  return {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    profileImage: user.profileImage ?? null,
-    role: user.role,
-    stars: user.stars,
-    badges: user.badges,
-    trophies: user.trophies,
-    modulesCompleted: user.modulesCompleted,
-    hasPaid: user.hasPaid,
-    emailVerified: user.emailVerified,
-  };
-}
-
 router.post('/register', async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, profileImage, role } = req.body;
+    const { firstName, lastName, email, password, profileImage, role, ageGroup, avatarId } = req.body;
 
+    if (STAFF_ROLES.includes(role)) {
+      return res.status(403).json({ message: 'Staff accounts are created by an administrator. Please contact your Shana admin.' });
+    }
     if (role !== undefined && !SELF_SERVICE_ROLES.includes(role)) {
       return res.status(400).json({ message: 'Invalid role' });
+    }
+    if (ageGroup !== undefined && !AGE_GROUPS.includes(ageGroup)) {
+      return res.status(400).json({ message: `ageGroup must be one of ${AGE_GROUPS.join(', ')}` });
+    }
+    if (avatarId !== undefined && !AVATAR_IDS.includes(avatarId)) {
+      return res.status(400).json({ message: 'Invalid avatarId' });
     }
     if (!firstName || typeof firstName !== 'string' || !firstName.trim()) {
       return res.status(400).json({ message: 'First name is required' });
@@ -115,7 +113,10 @@ router.post('/register', async (req, res, next) => {
       password,
       profileImage: profileImage && typeof profileImage === 'string' ? profileImage.trim() || null : null,
       role: role ?? 'student',
+      ageGroup: ageGroup ?? 'beginner',
+      avatarId: avatarId ?? null,
     });
+    await touchStreak(user);
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
     setRefreshTokenCookie(res, refreshToken);
@@ -183,6 +184,7 @@ router.post('/login', async (req, res, next) => {
     if (!user || !(await user.validatePassword(password))) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+    await touchStreak(user);
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
     setRefreshTokenCookie(res, refreshToken);
@@ -206,6 +208,9 @@ router.post('/refresh', async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }
+    // A refresh is how a returning visitor's session starts (app load), so it counts
+    // toward the streak just like a login.
+    await touchStreak(user);
     const accessToken = generateAccessToken(user);
     const newRefreshToken = generateRefreshToken(user);
     setRefreshTokenCookie(res, newRefreshToken);
