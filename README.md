@@ -122,7 +122,7 @@ printed once.
 
 ```bash
 npm run test:curriculum   # curriculum store, foreign keys, signup rules, demo logins (needs the server running)
-npm run test:auth         # register/login/refresh flow
+npm run test:auth         # register → login blocked until email verified → verify → login/refresh (needs the server running)
 ```
 
 `test:curriculum` rolls back everything it writes and deletes the one account it creates.
