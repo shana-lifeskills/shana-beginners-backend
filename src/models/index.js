@@ -12,6 +12,8 @@ const ModuleAssignment = require('./ModuleAssignment');
 const Payment = require('./Payment');
 const Task = require('./Task');
 const TaskSubmission = require('./TaskSubmission');
+const PaymentReminderLog = require('./PaymentReminderLog');
+const StudentProfile = require('./StudentProfile');
 
 // Curriculum: CurriculumModule is the source of truth; lessons/exercises are derived lookups.
 CurriculumModule.belongsTo(User, { as: 'createdBy', foreignKey: 'createdByUserId' });
@@ -55,6 +57,12 @@ TaskSubmission.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
 TaskSubmission.belongsTo(User, { as: 'reviewedBy', foreignKey: 'reviewedByUserId' });
 User.hasMany(TaskSubmission, { foreignKey: 'studentId' });
 
+PaymentReminderLog.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
+User.hasMany(PaymentReminderLog, { foreignKey: 'studentId' });
+
+StudentProfile.belongsTo(User, { foreignKey: 'userId' });
+User.hasOne(StudentProfile, { foreignKey: 'userId' });
+
 module.exports = {
   sequelize,
   User,
@@ -70,4 +78,6 @@ module.exports = {
   Payment,
   Task,
   TaskSubmission,
+  PaymentReminderLog,
+  StudentProfile,
 };

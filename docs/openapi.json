@@ -94,6 +94,54 @@
               "theo"
             ],
             "description": "Optional built-in avatar"
+          },
+          "studentProfile": {
+            "type": "object",
+            "description": "Child-registration details from the student signup stepper. Only used when role is student.",
+            "required": [
+              "gender",
+              "dateOfBirth",
+              "age",
+              "school",
+              "gradeClass",
+              "country",
+              "parentGuardianName",
+              "parentPhone",
+              "parentWhatsapp",
+              "enrolProgram",
+              "howDidYouHear",
+              "growthAreas",
+              "desiredSkills",
+              "termsAccepted"
+            ],
+            "properties": {
+              "middleName": { "type": "string", "nullable": true },
+              "preferredName": { "type": "string", "nullable": true },
+              "gender": { "type": "string", "enum": ["male", "female"] },
+              "dateOfBirth": { "type": "string", "format": "date" },
+              "age": { "type": "integer", "minimum": 3, "maximum": 17 },
+              "school": { "type": "string" },
+              "gradeClass": { "type": "string" },
+              "country": { "type": "string" },
+              "parentGuardianName": { "type": "string" },
+              "parentPhone": { "type": "string" },
+              "parentWhatsapp": { "type": "string" },
+              "enrolProgram": {
+                "type": "string",
+                "enum": ["soft-skills", "tech-skills", "language-skills", "personal-coaching"]
+              },
+              "howDidYouHear": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["whatsapp", "instagram", "facebook", "family-friend", "other"]
+                }
+              },
+              "howDidYouHearOther": { "type": "string", "nullable": true, "description": "Required if 'other' is included in howDidYouHear" },
+              "growthAreas": { "type": "string" },
+              "desiredSkills": { "type": "string" },
+              "termsAccepted": { "type": "boolean", "description": "Must be true — registration is rejected otherwise" }
+            }
           }
         }
       },
@@ -1291,6 +1339,27 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/payment-reminders/run": {
+      "post": {
+        "summary": "Manually run the month-end unpaid-student email reminder (trainer/admin) — same check a daily cron also runs on its own",
+        "tags": [
+          "Payments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
