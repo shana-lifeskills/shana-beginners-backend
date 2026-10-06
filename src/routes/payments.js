@@ -3,9 +3,33 @@ const { authenticate } = require('../middleware/auth');
 const paymentService = require('../services/paymentService');
 const paystackClient = require('../services/paystackClient');
 
+const PRIVILEGED_ROLES = ['instructor', 'admin'];
+
+/** Resolves which user's unlocked modules a read should return: the caller
+ *  themselves, or — only for an instructor/admin — another student named via
+ *  ?studentId=. Same pattern progress.js uses for its own reads. */
+function resolveTargetUserId(req) {
+  const { studentId } = req.query;
+  if (!studentId || studentId === req.user.id) return req.user.id;
+  if (!PRIVILEGED_ROLES.includes(req.user.role)) {
+    throw Object.assign(new Error('Forbidden'), { status: 403 });
+  }
+  return studentId;
+}
+
+router.get('/unlocked-modules', authenticate, async (req, res, next) => {
+  try {
+    const moduleIds = await paymentService.getUnlockedModuleIds(resolveTargetUserId(req));
+    res.json({ moduleIds });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.post('/initialize', authenticate, async (req, res, next) => {
   try {
-    const result = await paymentService.initializePayment(req.user.id);
+    const { moduleId } = req.body;
+    const result = await paymentService.initializePayment(req.user.id, moduleId);
     res.json(result);
   } catch (err) {
     next(err);
@@ -29,8 +53,8 @@ router.post('/verify', authenticate, async (req, res, next) => {
 // (Charge, not Inline) with its own status flow; see paymentService for details.
 router.post('/mobile-money/initiate', authenticate, async (req, res, next) => {
   try {
-    const { phone, provider } = req.body;
-    const result = await paymentService.initiateMobileMoneyCharge(req.user.id, req.user.email, { phone, provider });
+    const { phone, provider, moduleId } = req.body;
+    const result = await paymentService.initiateMobileMoneyCharge(req.user.id, req.user.email, { phone, provider, moduleId });
     res.json(result);
   } catch (err) {
     next(err);

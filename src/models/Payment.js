@@ -46,11 +46,18 @@ const Payment = sequelize.define('Payment', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  /** Which curriculum module this payment unlocks (pay-as-you-go) — null for
+   *  historical payments made before per-module pricing existed. */
+  moduleId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   tableName: 'Payments',
   indexes: [
     { unique: true, fields: ['reference'] },
     { fields: ['userId'] },
+    { fields: ['userId', 'moduleId'] },
   ],
 });
 

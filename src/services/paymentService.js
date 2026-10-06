@@ -1,5 +1,6 @@
 const crypto = require('crypto');
-const { sequelize, Payment, User } = require('../models');
+const { Op } = require('sequelize');
+const { sequelize, Payment, User, CurriculumModule } = require('../models');
 const paystackClient = require('./paystackClient');
 
 /** GH₵399.00 course-access price — server-owned, never trusted from the
@@ -24,16 +25,48 @@ function isDemoMode() {
 }
 
 class PaymentService {
+  /** Pay-as-you-go: a payment must name a real, unlockable module. Games are
+   *  always free (never gated behind payment), so they're rejected here same
+   *  as a module id that doesn't exist at all — there's nothing to "unlock". */
+  async _assertUnlockableModule(moduleId) {
+    if (!moduleId || typeof moduleId !== 'string') {
+      throw Object.assign(new Error('moduleId is required'), { status: 400 });
+    }
+    const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt'] });
+    if (!mod || mod.archivedAt !== null) {
+      throw Object.assign(new Error('Module not found'), { status: 404 });
+    }
+    if (mod.category === 'game') {
+      throw Object.assign(new Error('Games are free and never need payment'), { status: 400 });
+    }
+  }
+
+  /** Every module the student has an already-successful payment for — the
+   *  real source of truth for "is this module unlocked", used by both the
+   *  dashboard (what to show locked) and startOrResumeModule (server-side
+   *  enforcement, not just a frontend lock icon). */
+  async getUnlockedModuleIds(userId) {
+    const rows = await Payment.findAll({
+      where: { userId, status: 'success', moduleId: { [Op.ne]: null } },
+      attributes: ['moduleId'],
+      group: ['moduleId'],
+    });
+    return rows.map((r) => r.moduleId);
+  }
+
   /** Creates a pending Payment row with a server-generated reference the client
    *  will pass into Paystack Inline — verify() only ever trusts a reference
    *  this service itself issued. In demo mode, `publicKey` is omitted so the
    *  frontend shows its own mock card form instead of Paystack's real popup
    *  (which would reject a dummy key immediately, before any card details). */
-  async initializePayment(userId) {
+  async initializePayment(userId, moduleId) {
+    await this._assertUnlockableModule(moduleId);
+
     const reference = `shana_${crypto.randomUUID()}`;
     await Payment.create({
       userId,
       reference,
+      moduleId,
       amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
       currency: 'GHS',
       channel: 'card',
@@ -59,18 +92,20 @@ class PaymentService {
    *    the frontend polls verifyAndRecordPayment() (the same /verify
    *    endpoint card checkout uses) until it resolves.
    */
-  async initiateMobileMoneyCharge(userId, email, { phone, provider }) {
+  async initiateMobileMoneyCharge(userId, email, { phone, provider, moduleId }) {
     if (!MOBILE_MONEY_PROVIDERS.includes(provider)) {
       throw Object.assign(new Error('Unsupported mobile money provider'), { status: 400 });
     }
     if (!phone || typeof phone !== 'string' || !/^[0-9+]{9,15}$/.test(phone.trim())) {
       throw Object.assign(new Error('Enter a valid phone number'), { status: 400 });
     }
+    await this._assertUnlockableModule(moduleId);
 
     const reference = `shana_${crypto.randomUUID()}`;
     const payment = await Payment.create({
       userId,
       reference,
+      moduleId,
       amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
       currency: 'GHS',
       channel: 'mobile_money',

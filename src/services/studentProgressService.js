@@ -10,6 +10,7 @@ const {
   CurriculumModule,
   CurriculumLesson,
   CurriculumExercise,
+  Payment,
 } = require('../models');
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -18,13 +19,25 @@ const httpError = (status, message) => Object.assign(new Error(message), { statu
 
 /**
  * Rejects ids that aren't in the curriculum before anything is written, so a bad id gets
- * a clear 404/400 instead of tripping a foreign key and surfacing as a 500.
+ * a clear 404/400 instead of tripping a foreign key and surfacing as a 500. Returns the
+ * module row so callers that also need `category` (the pay-as-you-go check) don't query twice.
  * `activeOnly`: starting a module requires it to be live; finishing work in a module
  * that was archived mid-lesson is still allowed, so no child loses a step.
  */
 async function assertModule(moduleId, { activeOnly }) {
-  const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'archivedAt'] });
+  const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt'] });
   if (!mod || (activeOnly && mod.archivedAt !== null)) throw httpError(404, 'Module not found');
+  return mod;
+}
+
+/** Pay-as-you-go gate: games are always free; every other module needs a
+ *  successful Payment row for this exact student + module. Enforced here
+ *  (not just hidden behind a lock icon in the UI) so the API itself can't be
+ *  called directly to skip payment. */
+async function assertPaidFor(userId, mod) {
+  if (mod.category === 'game') return;
+  const payment = await Payment.findOne({ where: { userId, moduleId: mod.id, status: 'success' }, attributes: ['id'] });
+  if (!payment) throw httpError(402, 'Payment required to unlock this module');
 }
 
 async function assertStep(moduleId, lessonId, exerciseId) {
@@ -50,7 +63,8 @@ class StudentProgressService {
    *  null currentLessonId/currentExerciseId (e.g. content was edited after the student
    *  started with nothing to resume into). */
   async startOrResumeModule(userId, moduleId, { resumeLessonId, resumeExerciseId }) {
-    await assertModule(moduleId, { activeOnly: true });
+    const mod = await assertModule(moduleId, { activeOnly: true });
+    await assertPaidFor(userId, mod);
     const [progress, created] = await StudentModuleProgress.findOrCreate({
       where: { userId, moduleId },
       defaults: {
