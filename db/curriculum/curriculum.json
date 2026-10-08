@@ -1,10 +1,10 @@
 {
-  "exportedAt": "2026-10-01T08:50:38.617Z",
-  "source": "shana-e-learning-beginners@555e7f1",
+  "exportedAt": "2026-10-07T21:11:04.879Z",
+  "source": "shana-e-learning-beginners@da8ab5f+uncommitted",
   "counts": {
     "modules": 46,
-    "lessons": 105,
-    "exercises": 492
+    "lessons": 112,
+    "exercises": 535
   },
   "modules": [
     {
@@ -30550,6 +30550,903 @@
               "correctOptionId": "c",
               "feedbackText": "Empathy starts with understanding, not fixing.",
               "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w1-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: The Group Chat Message",
+              "heading": "The Group Chat Message",
+              "subtitle": "Follow along as Kwesi learns that intention and impact aren't always the same thing.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "The Late-Night Joke",
+                  "text": "Kwesi sent a joke to his class group chat late one evening. Some students replied with laughing emojis."
+                },
+                {
+                  "image": "",
+                  "title": "Something's Off",
+                  "text": "The next day at school, Adjoa was unusually quiet. She didn't sit with her friends and avoided eye contact. Kwesi noticed she hadn't replied to the message either."
+                },
+                {
+                  "image": "",
+                  "title": "The Real Story",
+                  "text": "Later, Kwesi overheard Adjoa telling another friend that the joke reminded her of something painful from her past. Even though Kwesi hadn’t meant to hurt anyone, his message had made Adjoa feel embarrassed and upset."
+                },
+                {
+                  "image": "",
+                  "title": "Not So Funny",
+                  "text": "Kwesi felt uncomfortable. He realised that what felt funny to him didn't feel funny to everyone."
+                },
+                {
+                  "image": "",
+                  "title": "Reaching Out",
+                  "text": "That afternoon, he sent Adjoa a private message apologising and asked how she was feeling. Adjoa replied, thanking him for checking in. She said she felt relieved that he understood."
+                },
+                {
+                  "image": "",
+                  "title": "What Kwesi Learned",
+                  "text": "Kwesi learned that empathy means thinking beyond intention and paying attention to impact."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Empathy means thinking beyond intention and paying attention to impact."
+            },
+            {
+              "id": "empathy-advanced-w1-discussion",
+              "type": "discussion-quiz",
+              "order": 3,
+              "prompt": "Discussion Points",
+              "heading": "Discussion Points",
+              "subtitle": "Pick the answer that fits best — if it's not quite right, you'll get to try again!",
+              "questions": [
+                {
+                  "id": "empathy-w1-dq-1",
+                  "prompt": "Why did Adjoa stop replying in the group chat?",
+                  "options": [
+                    {
+                      "id": "empathy-w1-dq-1-a",
+                      "text": "She didn't like group chats"
+                    },
+                    {
+                      "id": "empathy-w1-dq-1-b",
+                      "text": "She wanted attention"
+                    },
+                    {
+                      "id": "empathy-w1-dq-1-c",
+                      "text": "The joke affected her emotionally"
+                    },
+                    {
+                      "id": "empathy-w1-dq-1-d",
+                      "text": "She was too busy"
+                    }
+                  ],
+                  "correctOptionId": "empathy-w1-dq-1-c"
+                },
+                {
+                  "id": "empathy-w1-dq-2",
+                  "prompt": "What mistake did Kwesi make at first?",
+                  "options": [
+                    {
+                      "id": "empathy-w1-dq-2-a",
+                      "text": "Posting too late"
+                    },
+                    {
+                      "id": "empathy-w1-dq-2-b",
+                      "text": "Not considering how others might feel"
+                    },
+                    {
+                      "id": "empathy-w1-dq-2-c",
+                      "text": "Forgetting emojis"
+                    },
+                    {
+                      "id": "empathy-w1-dq-2-d",
+                      "text": "Sending a private message"
+                    }
+                  ],
+                  "correctOptionId": "empathy-w1-dq-2-b"
+                },
+                {
+                  "id": "empathy-w1-dq-3",
+                  "prompt": "What showed empathy in the story?",
+                  "options": [
+                    {
+                      "id": "empathy-w1-dq-3-a",
+                      "text": "Apologising and asking how someone feels"
+                    },
+                    {
+                      "id": "empathy-w1-dq-3-b",
+                      "text": "Staying silent"
+                    },
+                    {
+                      "id": "empathy-w1-dq-3-c",
+                      "text": "Sending jokes"
+                    },
+                    {
+                      "id": "empathy-w1-dq-3-d",
+                      "text": "Defending the joke"
+                    }
+                  ],
+                  "correctOptionId": "empathy-w1-dq-3-a"
+                },
+                {
+                  "id": "empathy-w1-dq-4",
+                  "prompt": "What is the main lesson of the story?",
+                  "options": [
+                    {
+                      "id": "empathy-w1-dq-4-a",
+                      "text": "Impact matters more than intention"
+                    },
+                    {
+                      "id": "empathy-w1-dq-4-b",
+                      "text": "Friends must agree"
+                    },
+                    {
+                      "id": "empathy-w1-dq-4-c",
+                      "text": "Jokes are always harmful"
+                    },
+                    {
+                      "id": "empathy-w1-dq-4-d",
+                      "text": "Silence solves problems"
+                    }
+                  ],
+                  "correctOptionId": "empathy-w1-dq-4-a"
+                },
+                {
+                  "id": "empathy-w1-dq-5",
+                  "prompt": "Which action shows empathy online?",
+                  "options": [
+                    {
+                      "id": "empathy-w1-dq-5-a",
+                      "text": "Posting quickly"
+                    },
+                    {
+                      "id": "empathy-w1-dq-5-b",
+                      "text": "Ignoring reactions"
+                    },
+                    {
+                      "id": "empathy-w1-dq-5-c",
+                      "text": "Thinking before sending messages"
+                    },
+                    {
+                      "id": "empathy-w1-dq-5-d",
+                      "text": "Making jokes popular"
+                    }
+                  ],
+                  "correctOptionId": "empathy-w1-dq-5-c"
+                }
+              ],
+              "reviewHeading": "Great Answers!",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w1-challenge",
+              "type": "challenge-tracker",
+              "order": 4,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "The Pause Challenge",
+              "subtitle": "Before posting or sending a message this week, pause and ask: \"How might this make someone feel?\"",
+              "image": "",
+              "imageAlt": "A student pausing to think before sending a message",
+              "dailyChallengeHeading": "Your Daily Challenge",
+              "dailyChallengeIntro": "Each day this week, pause before you post or send a message and ask yourself:",
+              "dailyChallengeItems": [
+                "Pause before sending a message and ask: \"How might this make someone feel?\""
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge each day — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child each evening: did you pause before sending a message today?",
+                "Remind them gently — it only takes a second to ask \"how might this feel?\"",
+                "Celebrate every pause, even if the message still got sent.",
+                "Tick the day together so progress feels like a shared win."
+              ],
+              "trackerHeading": "Empathy & Reflection",
+              "trackerIntro": "Track your daily \"pause and ask\" moments. Tick each day after you stop to think about how your message might make someone feel.",
+              "days": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w1-confidence-link",
+              "type": "confidence-link",
+              "order": 5,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Understanding",
+              "headingLine2": "Different Feelings",
+              "subtitle": "Empathy means noticing feelings that aren't your own — and caring about them anyway.",
+              "trainerQuote": "Empathy means noticing feelings that aren't your own — and caring about them anyway.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "I can understand feelings even when they are different from mine.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: understanding someone else’s feelings is one of the kindest things you can do.",
+              "week": 1,
+              "completeLabel": "Complete Week 1"
+            }
+          ]
+        },
+        {
+          "id": "empathy-advanced-week-2",
+          "title": "Empathy During Conflict",
+          "order": 2,
+          "week": 2,
+          "stage": "Practice",
+          "introWelcome": {
+            "layout": "centered",
+            "weekPill": "📅 Week 2",
+            "titleStart": "Empathy During",
+            "titleAccent": "Conflict",
+            "subtitle": "Disagreements happen — empathy helps us work through them without losing the relationship.",
+            "objectiveIcon": "💬",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Learners practise empathy as a tool for resolving disagreements.",
+            "startLabel": "Let’s Get Started",
+            "image": "",
+            "imageAlt": "Two teens talking calmly through a disagreement"
+          },
+          "exercises": [
+            {
+              "id": "empathy-advanced-w2-warmup",
+              "type": "sorting-game",
+              "order": 1,
+              "prompt": "Sorting Reactions",
+              "title": "Sorting Reactions",
+              "badgeIcon": "🎮",
+              "badge": "Warm-Up",
+              "focusIcon": "🤝",
+              "focusHeading": "Empathy Focus for Learners",
+              "focusPoints": [
+                "Noticing how someone feels during a disagreement",
+                "Choosing calm, helpful responses over reactive ones",
+                "Using empathy to work through conflict, not avoid it"
+              ],
+              "instruction": "Drag each response into the correct box.",
+              "items": [
+                {
+                  "id": "listening",
+                  "label": "Listening",
+                  "correctBinId": "helpful"
+                },
+                {
+                  "id": "speaking-calmly",
+                  "label": "Speaking calmly",
+                  "correctBinId": "helpful"
+                },
+                {
+                  "id": "explaining-feelings",
+                  "label": "Explaining feelings",
+                  "correctBinId": "helpful"
+                },
+                {
+                  "id": "shouting",
+                  "label": "Shouting",
+                  "correctBinId": "unhelpful"
+                },
+                {
+                  "id": "blaming",
+                  "label": "Blaming",
+                  "correctBinId": "unhelpful"
+                },
+                {
+                  "id": "walking-away-angrily",
+                  "label": "Walking away angrily",
+                  "correctBinId": "unhelpful"
+                }
+              ],
+              "bins": [
+                {
+                  "id": "helpful",
+                  "icon": "✅",
+                  "label": "Helpful Responses",
+                  "variant": "positive"
+                },
+                {
+                  "id": "unhelpful",
+                  "icon": "❌",
+                  "label": "Unhelpful Responses",
+                  "variant": "negative"
+                }
+              ],
+              "feedbackText": "Empathy helps conflict move forward.",
+              "parentNote": "Parents: please help your child with this exercise.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w2-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: The Team Argument",
+              "heading": "The Team Argument",
+              "subtitle": "Follow along as Malik and Sena turn an argument into teamwork.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "Working on the Project",
+                  "text": "Malik and Sena were in the same group for a science project. Malik felt he had done most of the work, while Sena believed she had contributed equally."
+                },
+                {
+                  "image": "",
+                  "title": "The Argument",
+                  "text": "During a group meeting, Malik raised his voice and accused Sena of not helping enough. Sena crossed her arms and stopped speaking."
+                },
+                {
+                  "image": "",
+                  "title": "Everything Stops",
+                  "text": "The project stalled. No one wanted to continue."
+                },
+                {
+                  "image": "",
+                  "title": "Malik Decides to Listen",
+                  "text": "Later, Malik thought about what had happened. Instead of arguing, he decided to listen. The next day, he asked Sena to explain her side."
+                },
+                {
+                  "image": "",
+                  "title": "Sena's Side of the Story",
+                  "text": "She shared that she had struggled with part of the project and felt embarrassed to ask for help."
+                },
+                {
+                  "image": "",
+                  "title": "Working It Out Together",
+                  "text": "Malik realised he hadn't considered her situation. They talked calmly, divided the work again, and finished the project together."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Empathy turned their conflict into cooperation."
+            },
+            {
+              "id": "empathy-advanced-w2-discussion-q1",
+              "type": "sorting-game",
+              "order": 3,
+              "prompt": "Discussion: Empathy Actions or Not?",
+              "title": "Empathy Actions or Not?",
+              "badgeIcon": "🧠",
+              "badge": "Discussion Points",
+              "focusIcon": "🤝",
+              "focusHeading": "Empathy Focus for Learners",
+              "focusPoints": [
+                "Telling empathy actions apart from reactions that shut people out",
+                "Knowing the order that turns conflict into understanding",
+                "Connecting calm behaviour to the outcomes it creates"
+              ],
+              "instruction": "Drag each action into the correct box.",
+              "items": [
+                {
+                  "id": "listening",
+                  "label": "Listening",
+                  "correctBinId": "empathy"
+                },
+                {
+                  "id": "explaining-feelings",
+                  "label": "Explaining feelings",
+                  "correctBinId": "empathy"
+                },
+                {
+                  "id": "adjusting-plans",
+                  "label": "Adjusting plans",
+                  "correctBinId": "empathy"
+                },
+                {
+                  "id": "interrupting",
+                  "label": "Interrupting",
+                  "correctBinId": "not-empathy"
+                },
+                {
+                  "id": "blaming",
+                  "label": "Blaming",
+                  "correctBinId": "not-empathy"
+                },
+                {
+                  "id": "ignoring",
+                  "label": "Ignoring",
+                  "correctBinId": "not-empathy"
+                }
+              ],
+              "bins": [
+                {
+                  "id": "empathy",
+                  "icon": "✅",
+                  "label": "Empathy Actions",
+                  "variant": "positive"
+                },
+                {
+                  "id": "not-empathy",
+                  "icon": "❌",
+                  "label": "Not Empathy",
+                  "variant": "negative"
+                }
+              ],
+              "feedbackText": "Empathy actions build understanding — the rest get in the way.",
+              "parentNote": "Parents: please help your child with this exercise.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w2-discussion-q2",
+              "type": "plan-relay",
+              "order": 4,
+              "prompt": "Discussion: Put the Steps in Order",
+              "pillLabel": "🧠 Discussion Points",
+              "title": "Put the Steps in Order",
+              "subtitle": "Drag the steps into the order that helps resolve a conflict.",
+              "stepsHeading": "Steps to Arrange",
+              "orderHeading": "Your Order",
+              "options": [
+                {
+                  "id": "listen",
+                  "label": "Listen"
+                },
+                {
+                  "id": "speak-calmly",
+                  "label": "Speak calmly"
+                },
+                {
+                  "id": "understand",
+                  "label": "Understand"
+                },
+                {
+                  "id": "move-forward",
+                  "label": "Move forward"
+                }
+              ],
+              "correctOrder": [
+                "listen",
+                "speak-calmly",
+                "understand",
+                "move-forward"
+              ],
+              "checkLabel": "Check Answer",
+              "tryAgainLabel": "Try Again",
+              "successMessage": "Great thinking! That's exactly the right order.",
+              "retryMessage": "Not quite the right order yet — give it another try!",
+              "cardTitle": "My Conflict Resolution Steps",
+              "downloadLabel": "Download My Steps",
+              "parentNote": "Parents: please assist your child with this exercise.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w2-discussion-q3",
+              "type": "teamwork-match-warmup",
+              "order": 5,
+              "prompt": "Discussion: Match Behaviour to Outcome",
+              "badge": "Discussion Points",
+              "heading": "Match Behaviour → Outcome",
+              "subtitle": "Match each behaviour to the outcome it leads to. Match them all to move on!",
+              "roleColumnLabel": "Behaviour",
+              "actionColumnLabel": "Outcome",
+              "pairs": [
+                {
+                  "id": "listening",
+                  "role": "Listening",
+                  "action": "Understanding"
+                },
+                {
+                  "id": "shouting",
+                  "role": "Shouting",
+                  "action": "Conflict"
+                },
+                {
+                  "id": "calm-discussion",
+                  "role": "Calm discussion",
+                  "action": "Resolution"
+                }
+              ],
+              "allDoneTitle": "Every behaviour matched! 🧩",
+              "allDoneText": "Calm, caring behaviour leads to understanding — not conflict.",
+              "parentNote": "Parents: please help your child with this exercise.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w2-challenge",
+              "type": "challenge-tracker",
+              "order": 6,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "Calm Words Challenge",
+              "subtitle": "Use one calm sentence during a disagreement this week.",
+              "image": "",
+              "imageAlt": "A student speaking calmly during a disagreement",
+              "dailyChallengeHeading": "Your Daily Challenge",
+              "dailyChallengeIntro": "Each day this week, if a disagreement comes up, try this:",
+              "dailyChallengeItems": [
+                "Use one calm sentence during a disagreement this week."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge each day — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child each evening: did a disagreement come up today?",
+                "Remind them gently — one calm sentence can change the whole conversation.",
+                "Celebrate every calm moment, even if the disagreement wasn't fully resolved.",
+                "Tick the day together so progress feels like a shared win."
+              ],
+              "trackerHeading": "Empathy & Reflection",
+              "trackerIntro": "Track your daily \"calm words\" moments. Tick each day after you use a calm sentence during a disagreement.",
+              "days": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w2-confidence-link",
+              "type": "confidence-link",
+              "order": 7,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Handling Conflict",
+              "headingLine2": "With Empathy",
+              "subtitle": "Disagreements don't have to break trust — calm words and empathy can turn conflict into connection.",
+              "trainerQuote": "Disagreements don't have to break trust — calm words and empathy can turn conflict into connection.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "I can handle conflict with respect and empathy.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: how you handle conflict matters more than avoiding it.",
+              "week": 2,
+              "completeLabel": "Complete Week 2"
+            }
+          ]
+        },
+        {
+          "id": "empathy-advanced-week-3",
+          "title": "Empathy & Responsibility",
+          "order": 3,
+          "week": 3,
+          "stage": "Responsibility",
+          "objectivesWelcome": {
+            "weekPill": "📅 Week 3",
+            "title": "Empathy & Responsibility",
+            "subtitle": "Understand how empathy supports accountability and trust.",
+            "image": "",
+            "imageAlt": "Teens taking responsibility and building trust together",
+            "objectives": [
+              "Understand how empathy supports accountability and trust."
+            ],
+            "startLabel": "Let's Get Started"
+          },
+          "exercises": [
+            {
+              "id": "empathy-advanced-w3-story",
+              "type": "story-carousel",
+              "order": 1,
+              "prompt": "Mini Story: The Missed Deadline",
+              "heading": "The Missed Deadline",
+              "subtitle": "Follow along as Naa learns that taking responsibility — with empathy — rebuilds trust.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "A Missed Deadline",
+                  "text": "Naa forgot to submit her part of a group assignment on time. The group received a lower score because of it."
+                },
+                {
+                  "image": "",
+                  "title": "Staying Quiet",
+                  "text": "At first, Naa wanted to stay quiet and hope no one noticed. But she saw how disappointed her teammates looked."
+                },
+                {
+                  "image": "",
+                  "title": "Speaking Up",
+                  "text": "She decided to speak up and admitted her mistake. She apologised and asked how she could help fix the problem."
+                },
+                {
+                  "image": "",
+                  "title": "Rebuilding Together",
+                  "text": "Her group members were upset at first, but they appreciated her honesty. Together, they planned better for the next assignment."
+                },
+                {
+                  "image": "",
+                  "title": "Trust Restored",
+                  "text": "By taking responsibility with empathy, trust was slowly rebuilt."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "By taking responsibility with empathy, trust was slowly rebuilt."
+            },
+            {
+              "id": "empathy-advanced-w3-discussion",
+              "type": "discussion-true-false",
+              "order": 2,
+              "prompt": "Discussion Points",
+              "heading": "Discussion Points",
+              "subtitle": "Decide True or False — a wrong pick lets you try again.",
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "reviewHeading": "Great Answers!",
+              "continueLabel": "Continue →",
+              "statements": [
+                {
+                  "id": "empathy-w3-tf-1",
+                  "text": "Admitting mistakes shows empathy.",
+                  "answer": true,
+                  "feedbackText": "Right — noticing and admitting a mistake is empathy in action."
+                },
+                {
+                  "id": "empathy-w3-tf-2",
+                  "text": "Empathy removes consequences.",
+                  "answer": false,
+                  "feedbackText": "Correct — empathy doesn't erase consequences, it helps you face them well."
+                },
+                {
+                  "id": "empathy-w3-tf-3",
+                  "text": "Listening helps rebuild trust.",
+                  "answer": true,
+                  "feedbackText": "Yes — listening is how trust starts to rebuild."
+                },
+                {
+                  "id": "empathy-w3-tf-4",
+                  "text": "Owning mistakes weakens teams.",
+                  "answer": false,
+                  "feedbackText": "Right — owning a mistake builds trust, it doesn’t weaken the team."
+                },
+                {
+                  "id": "empathy-w3-tf-5",
+                  "text": "Empathy supports responsibility.",
+                  "answer": true,
+                  "feedbackText": "Correct — empathy and responsibility work together."
+                }
+              ]
+            },
+            {
+              "id": "empathy-advanced-w3-challenge",
+              "type": "challenge-tracker",
+              "order": 3,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "Own-It Challenge",
+              "subtitle": "Admit one mistake honestly and reflect on what happened next.",
+              "image": "",
+              "imageAlt": "A student honestly reflecting after a mistake",
+              "dailyChallengeHeading": "Your Daily Challenge",
+              "dailyChallengeIntro": "Each day this week, if you make a mistake, try this:",
+              "dailyChallengeItems": [
+                "Admit one mistake honestly and reflect on what happened next."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge each day — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child each evening: did you admit a mistake today?",
+                "Remind them gently — owning a mistake is a sign of strength, not weakness.",
+                "Celebrate every honest moment, even small ones.",
+                "Tick the day together so progress feels like a shared win."
+              ],
+              "trackerHeading": "Empathy & Reflection",
+              "trackerIntro": "Track your daily \"own it\" moments. Tick each day after you admit a mistake and reflect on what happened next.",
+              "days": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w3-confidence-link",
+              "type": "confidence-link",
+              "order": 4,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Responsibility",
+              "headingLine2": "Builds Trust",
+              "subtitle": "Owning your mistakes — with empathy — is what makes people trust you again.",
+              "trainerQuote": "Owning your mistakes — with empathy — is what makes people trust you again.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Taking responsibility builds trust.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: trust isn't rebuilt by avoiding mistakes — it's rebuilt by owning them.",
+              "week": 3,
+              "completeLabel": "Complete Week 3"
+            }
+          ]
+        },
+        {
+          "id": "empathy-advanced-week-4",
+          "title": "Empathy as a Daily Habit",
+          "order": 4,
+          "week": 4,
+          "stage": "Habit",
+          "introWelcome": {
+            "weekPill": "📅 Week 4",
+            "titleStart": "Empathy as a",
+            "titleAccent": "Daily Habit",
+            "subtitle": "Apply empathy intentionally in daily life and relationships.",
+            "objectiveIcon": "💙",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Apply empathy intentionally in daily life and relationships.",
+            "startLabel": "Let's Get Started",
+            "image": "",
+            "imageAlt": "A teen practising empathy in everyday moments"
+          },
+          "exercises": [
+            {
+              "id": "empathy-advanced-w4-warmup",
+              "type": "warmup-finish-sentence",
+              "order": 1,
+              "prompt": "Warm-Up: Short Answer",
+              "title": "Short Answer",
+              "subtitle": "Type your answer below — there's no wrong answer, just your own words.",
+              "inputPlaceholder": "Type your answer…",
+              "checkLabel": "Check",
+              "hintLabel": "Need a hint? Tap me!",
+              "progressNoun": "done!",
+              "feedbackText": "Small actions make a big difference.",
+              "parentNote": "Parents, please assist your child with this exercise.",
+              "continueLabel": "Continue →",
+              "items": [
+                {
+                  "id": "empathy-w4-fs-1",
+                  "icon": "💙",
+                  "tone": "blue",
+                  "prefix": "",
+                  "suffix": "",
+                  "frame": "Name one small action that shows empathy.",
+                  "sampleAnswer": "Listening."
+                }
+              ]
+            },
+            {
+              "id": "empathy-advanced-w4-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: The New Student",
+              "heading": "The New Student",
+              "subtitle": "Follow along as Kojo shows that empathy just takes a little awareness and action.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "The New Student",
+                  "text": "A new student, Amina, joined the class mid-term. She struggled to make friends and often sat alone during breaks."
+                },
+                {
+                  "image": "",
+                  "title": "Noticed, But Not Helped",
+                  "text": "Many students noticed but assumed someone else would help."
+                },
+                {
+                  "image": "",
+                  "title": "Kojo Reaches Out",
+                  "text": "One afternoon, Kojo decided to sit with her and ask about her interests. Amina smiled for the first time that week."
+                },
+                {
+                  "image": "",
+                  "title": "Others Join In",
+                  "text": "Soon, others joined. A simple act of empathy helped Amina feel included and confident."
+                },
+                {
+                  "image": "",
+                  "title": "Small Gestures, Big Impact",
+                  "text": "Empathy didn't require big gestures, just awareness and action."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Empathy didn't require big gestures, just awareness and action."
+            },
+            {
+              "id": "empathy-advanced-w4-discussion",
+              "type": "discussion-prompt-samples",
+              "order": 3,
+              "prompt": "Discussion Prompts and Sample Answers",
+              "badge": "💬 Discussion Points",
+              "title": "Discussion Points",
+              "subtitle": "Type your own answer first — then see the sample answer.",
+              "prompts": [
+                {
+                  "id": "empathy-w4-dps-1",
+                  "question": "What small action changed the situation in the story?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Sitting with the new student"
+                  ]
+                },
+                {
+                  "id": "empathy-w4-dps-2",
+                  "question": "Why do small acts of empathy matter?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "They help people feel included"
+                  ]
+                },
+                {
+                  "id": "empathy-w4-dps-3",
+                  "question": "When has someone shown empathy to you?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "A friend listened to me"
+                  ]
+                },
+                {
+                  "id": "empathy-w4-dps-4",
+                  "question": "What empathy habit will you keep?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Checking in on others"
+                  ]
+                },
+                {
+                  "id": "empathy-w4-dps-5",
+                  "question": "How has your understanding of empathy changed?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "It's something I practise daily"
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Sample Answer",
+              "nextSampleLabel": "Show sample answer",
+              "nextQuestionLabel": "Next Question",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Empathy isn't one big moment — it's the small, everyday choices to notice and support the people around you.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w4-challenge",
+              "type": "challenge-tracker",
+              "order": 4,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "Empathy in Action",
+              "subtitle": "Choose one empathy habit and practise it for three days.",
+              "image": "",
+              "imageAlt": "A student practising a daily empathy habit",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "Over the next three days, try this:",
+              "dailyChallengeItems": [
+                "Choose one empathy habit and practise it for three days."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge each day — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child each evening: which empathy habit did you practise today?",
+                "Help them choose one simple habit to focus on, rather than many at once.",
+                "Celebrate consistency — doing it for all three days is the goal.",
+                "Tick the day together so progress feels like a shared win."
+              ],
+              "trackerHeading": "Empathy & Reflection",
+              "trackerIntro": "Track your \"empathy in action\" days. Tick each day after you practise your chosen habit.",
+              "days": [
+                "Day 1",
+                "Day 2",
+                "Day 3"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "empathy-advanced-w4-confidence-link",
+              "type": "confidence-link",
+              "order": 5,
+              "prompt": "Final Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Empathy,",
+              "headingLine2": "Every Day",
+              "subtitle": "You've practised seeing, listening, resolving, and owning — now empathy is something you carry with you every day.",
+              "trainerQuote": "You've practised seeing, listening, resolving, and owning — now empathy is something you carry with you every day.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Empathy is a skill I practise every day.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: empathy isn't a one-time lesson — it's a habit you keep building.",
+              "week": 4,
+              "completeLabel": "Complete Week 4"
             }
           ]
         }
@@ -30575,7 +31472,1034 @@
       "category": "life-skills",
       "ageGroup": "advanced",
       "trackName": "Character Development",
-      "lessons": []
+      "lessons": [
+        {
+          "id": "respect-advanced-week-1",
+          "title": "Respect for Self",
+          "order": 1,
+          "week": 1,
+          "stage": "Awareness",
+          "introWelcome": {
+            "weekPill": "📅 Week 1",
+            "titleStart": "Respect for",
+            "titleAccent": "Self",
+            "titleAccentColor": "coral",
+            "subtitle": "Respect starts with how you see and speak to yourself.",
+            "objectiveIcon": "💙",
+            "objectiveIconColor": "coral",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Learn how healthy self-talk, personal boundaries, and self-value all start with respecting yourself first.",
+            "startLabel": "Let’s Get Started",
+            "startBtnColor": "coral",
+            "image": "/assets/images/teacher-welcome.png",
+            "imageAlt": "A warm, smiling teacher welcoming the class"
+          },
+          "exercises": [
+            {
+              "id": "respect-advanced-w1-warmup",
+              "type": "discussion-true-false",
+              "order": 1,
+              "prompt": "Warm-Up: True or False? Self-Respect Edition",
+              "heading": "True or False? Self-Respect Edition",
+              "subtitle": "Tap True or False — a wrong pick lets you try again.",
+              "trueLabel": "True",
+              "falseLabel": "False",
+              "reviewHeading": "Great Answers!",
+              "continueLabel": "Continue →",
+              "statements": [
+                {
+                  "id": "respect-w1-tf-1",
+                  "text": "Respecting yourself means knowing your worth.",
+                  "answer": true,
+                  "feedbackText": "When you value yourself, you treat yourself with care."
+                },
+                {
+                  "id": "respect-w1-tf-2",
+                  "text": "You should never make mistakes.",
+                  "answer": false,
+                  "feedbackText": "Mistakes help you grow."
+                },
+                {
+                  "id": "respect-w1-tf-3",
+                  "text": "Self-respect includes saying 'no' when needed.",
+                  "answer": true,
+                  "feedbackText": "Boundaries protect your wellbeing."
+                },
+                {
+                  "id": "respect-w1-tf-4",
+                  "text": "Calling yourself names is a form of self-respect.",
+                  "answer": false,
+                  "feedbackText": "Self-respect uses kind words."
+                },
+                {
+                  "id": "respect-w1-tf-5",
+                  "text": "Trying again shows respect for your own abilities.",
+                  "answer": true,
+                  "feedbackText": "Effort = self-belief."
+                }
+              ]
+            },
+            {
+              "id": "respect-advanced-w1-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: Akua's Decision",
+              "heading": "Akua's Decision",
+              "subtitle": "Follow along as Akua chooses self-respect over peer pressure.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "The Challenge",
+                  "text": "Akua’s friends wanted her to join a challenge: staying awake all night to prove they were \"strong.\""
+                },
+                {
+                  "image": "",
+                  "title": "Feeling Uncomfortable",
+                  "text": "Akua felt uncomfortable — she had school the next day."
+                },
+                {
+                  "image": "",
+                  "title": "The Pressure",
+                  "text": "Her friend said, \"Come on, don’t be boring.\""
+                },
+                {
+                  "image": "",
+                  "title": "Akua Speaks Up",
+                  "text": "Akua took a breath and said, \"I respect myself too much to harm my body.\""
+                },
+                {
+                  "image": "",
+                  "title": "Choosing Herself",
+                  "text": "She slept early."
+                },
+                {
+                  "image": "",
+                  "title": "Proud of Her Choice",
+                  "text": "The next day, she felt proud of choosing what was best for her — not what others wanted."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "The next day, she felt proud of choosing what was best for her — not what others wanted."
+            },
+            {
+              "id": "respect-advanced-w1-discussion",
+              "type": "discussion-prompt-samples",
+              "order": 3,
+              "prompt": "Discussion Prompts and Sample Answers",
+              "badge": "💬 Discussion Points",
+              "title": "Discussion Points",
+              "subtitle": "Type your own answer first — then see the sample answer.",
+              "prompts": [
+                {
+                  "id": "respect-w1-dps-1",
+                  "question": "Why was Akua's decision an act of self-respect?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "She valued her health and didn't let pressure make her choose something harmful."
+                  ]
+                },
+                {
+                  "id": "respect-w1-dps-2",
+                  "question": "When is it important to say 'no'?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "When something feels wrong, unsafe, or goes against my values."
+                  ]
+                },
+                {
+                  "id": "respect-w1-dps-3",
+                  "question": "Describe one healthy boundary you can set.",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "I can say no to friends who pressure me to skip homework."
+                  ]
+                },
+                {
+                  "id": "respect-w1-dps-4",
+                  "question": "How can self-respect affect your confidence?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "It helps me believe in myself and feel stronger when making choices."
+                  ]
+                },
+                {
+                  "id": "respect-w1-dps-5",
+                  "question": "What is one self-respecting habit you want to build?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Sleeping on time",
+                    "Limiting screen time",
+                    "Positive self-talk"
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Sample Answer",
+              "nextSampleLabel": "Show sample answer",
+              "nextQuestionLabel": "Next Question",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Self-respect shows up in the boundaries you set, the habits you build, and the confidence you carry every day.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w1-activity",
+              "type": "share-prompt",
+              "order": 4,
+              "prompt": "My Boundaries Checklist",
+              "fields": [
+                {
+                  "id": "health",
+                  "label": "Something I will protect: my health",
+                  "placeholder": "I will protect my health by…"
+                },
+                {
+                  "id": "time",
+                  "label": "Something I will protect: my time",
+                  "placeholder": "I will protect my time by…"
+                },
+                {
+                  "id": "emotions",
+                  "label": "Something I will protect: my emotions",
+                  "placeholder": "I will protect my emotions by…"
+                }
+              ],
+              "submitLabel": "Save My Boundaries",
+              "groupLabel": "My Boundaries Checklist",
+              "howItWorks": [
+                "Write one boundary for each area: health, time, and emotions",
+                "These are personal commitments to yourself",
+                "Your trainer can see your responses"
+              ],
+              "teacherFollowUp": "Great work — these boundaries are yours to protect. Revisit them anytime you need a reminder.",
+              "offerCardDownload": true,
+              "cardTitle": "My Boundaries Checklist"
+            },
+            {
+              "id": "respect-advanced-w1-challenge",
+              "type": "challenge-tracker",
+              "order": 5,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "The \"No\" Challenge",
+              "subtitle": "Say \"no\" once this week when something doesn't feel right.",
+              "image": "",
+              "imageAlt": "A student confidently saying no",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "This week, look for one moment to practise this:",
+              "dailyChallengeItems": [
+                "Say \"no\" once this week when something doesn't feel right."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child this week: was there a moment you wanted to say no?",
+                "Remind them that saying no to protect themselves is a form of self-respect.",
+                "Celebrate the moment they practise it, however small.",
+                "Tick it together once they've done it, so the win feels shared."
+              ],
+              "trackerHeading": "Respect & Reflection",
+              "trackerIntro": "Track your \"say no\" moment. Tick it once you've practised speaking up for yourself this week.",
+              "days": [
+                "This Week"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w1-confidence-link",
+              "type": "confidence-link",
+              "order": 6,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Respect Guides",
+              "headingLine2": "My Choices",
+              "subtitle": "When you respect yourself, your choices start to reflect what you truly deserve.",
+              "trainerQuote": "When you respect yourself, your choices start to reflect what you truly deserve.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Respect for myself guides my choices.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: self-respect isn't selfish — it's how you protect what matters most: you.",
+              "week": 1,
+              "completeLabel": "Complete Week 1"
+            }
+          ]
+        },
+        {
+          "id": "respect-advanced-week-2",
+          "title": "Respect for Others",
+          "order": 2,
+          "week": 2,
+          "stage": "Connection",
+          "introWelcome": {
+            "layout": "centered",
+            "weekPill": "📅 Week 2",
+            "titleStart": "Respect for",
+            "titleAccent": "Others",
+            "subtitle": "Respect for others starts with how you listen, speak, and treat the people around you.",
+            "objectiveIcon": "👂",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Learn how listening, empathy, kindness, and clear communication all show respect for the people around you.",
+            "startLabel": "Let's Get Started",
+            "image": "",
+            "imageAlt": "Teens listening and communicating with kindness"
+          },
+          "exercises": [
+            {
+              "id": "respect-advanced-w2-warmup",
+              "type": "discussion-prompt-samples",
+              "order": 1,
+              "prompt": "Warm-Up: \"What Would You Do?\" Scenario Poll",
+              "badge": "🎮 Warm-Up",
+              "title": "What Would You Do?",
+              "subtitle": "Think about what you'd do — then see the respectful choice.",
+              "prompts": [
+                {
+                  "id": "respect-w2-wu-1",
+                  "question": "A friend shares something personal. What do you do?",
+                  "placeholder": "Type what you would do…",
+                  "sampleAnswers": [
+                    "Listen and keep it private — respect protects trust."
+                  ]
+                },
+                {
+                  "id": "respect-w2-wu-2",
+                  "question": "Someone interrupts you. What's respectful?",
+                  "placeholder": "Type what you would do…",
+                  "sampleAnswers": [
+                    "Wait and take your turn calmly."
+                  ]
+                },
+                {
+                  "id": "respect-w2-wu-3",
+                  "question": "You disagree with someone. What's the best response?",
+                  "placeholder": "Type what you would do…",
+                  "sampleAnswers": [
+                    "Share your view politely."
+                  ]
+                },
+                {
+                  "id": "respect-w2-wu-4",
+                  "question": "A new student sits alone. What can you do?",
+                  "placeholder": "Type what you would do…",
+                  "sampleAnswers": [
+                    "Invite them to join."
+                  ]
+                },
+                {
+                  "id": "respect-w2-wu-5",
+                  "question": "You win a game easily. How do you show respect?",
+                  "placeholder": "Type what you would do…",
+                  "sampleAnswers": [
+                    "Congratulate others kindly."
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Respectful Choice",
+              "nextSampleLabel": "Show respectful choice",
+              "nextQuestionLabel": "Next Scenario",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Respect for others shows up in small moments — how you listen, respond, and include people.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w2-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: Yaw and the Debate",
+              "heading": "Yaw and the Debate",
+              "subtitle": "Follow along as Yaw stands up for someone else with calm, firm respect.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "The Debate Club",
+                  "text": "Yaw was in a neighbourhood debate club."
+                },
+                {
+                  "image": "",
+                  "title": "Someone Laughs",
+                  "text": "During a discussion, someone laughed at another boy's answer."
+                },
+                {
+                  "image": "",
+                  "title": "Yaw Speaks Up",
+                  "text": "Yaw stood up and said, \"Everyone deserves to speak without being mocked.\""
+                },
+                {
+                  "image": "",
+                  "title": "Calm but Firm",
+                  "text": "His voice was calm — but firm."
+                },
+                {
+                  "image": "",
+                  "title": "The Room Responds",
+                  "text": "The group fell silent. The boy smiled gratefully."
+                },
+                {
+                  "image": "",
+                  "title": "Protecting Others",
+                  "text": "Yaw learned that respect means protecting others, not just yourself."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Yaw learned that respect means protecting others, not just yourself."
+            },
+            {
+              "id": "respect-advanced-w2-discussion",
+              "type": "discussion-prompt-samples",
+              "order": 3,
+              "prompt": "Discussion Prompts and Sample Answers",
+              "badge": "💬 Discussion Points",
+              "title": "Discussion Points",
+              "subtitle": "Type your own answer first — then see the sample answer.",
+              "prompts": [
+                {
+                  "id": "respect-w2-dps-1",
+                  "question": "Why was Yaw's reaction respectful?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "He supported someone who was being disrespected."
+                  ]
+                },
+                {
+                  "id": "respect-w2-dps-2",
+                  "question": "What does respectful listening look like?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Not interrupting, maintaining eye contact, nodding."
+                  ]
+                },
+                {
+                  "id": "respect-w2-dps-3",
+                  "question": "How does respect build stronger friendships?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Friends trust you more when you treat them well."
+                  ]
+                },
+                {
+                  "id": "respect-w2-dps-4",
+                  "question": "Describe one way to show respect during disagreements.",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Use calm words and avoid insults."
+                  ]
+                },
+                {
+                  "id": "respect-w2-dps-5",
+                  "question": "How can you help someone feel included?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Invite them to play",
+                    "Ask if they want to join my group"
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Sample Answer",
+              "nextSampleLabel": "Show sample answer",
+              "nextQuestionLabel": "Next Question",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Respect for others is built through listening, kindness, and including people — one small choice at a time.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w2-challenge",
+              "type": "challenge-tracker",
+              "order": 4,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "The Respect Lift",
+              "subtitle": "Show one act of respect to someone who needs support.",
+              "image": "",
+              "imageAlt": "A student offering support to a classmate",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "This week, look for one moment to practise this:",
+              "dailyChallengeItems": [
+                "Show one act of respect to someone who needs support."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child this week: who did you support, and how?",
+                "Remind them that respect often means noticing when someone needs help.",
+                "Celebrate the moment they practise it, however small.",
+                "Tick it together once they've done it, so the win feels shared."
+              ],
+              "trackerHeading": "Respect & Reflection",
+              "trackerIntro": "Track your act of support. Tick it once you've shown respect to someone who needed it this week.",
+              "days": [
+                "This Week"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w2-confidence-link",
+              "type": "confidence-link",
+              "order": 5,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Respect Lifts",
+              "headingLine2": "People Up",
+              "subtitle": "When you treat others with respect, you help them feel seen, valued, and supported.",
+              "trainerQuote": "When you treat others with respect, you help them feel seen, valued, and supported.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Respect lifts people up.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: respect for others is a gift you can give anytime, anywhere.",
+              "week": 2,
+              "completeLabel": "Complete Week 2"
+            }
+          ]
+        },
+        {
+          "id": "respect-advanced-week-3",
+          "title": "Respect for Belongings",
+          "order": 3,
+          "week": 3,
+          "stage": "Responsibility",
+          "objectivesWelcome": {
+            "weekPill": "📅 Week 3",
+            "title": "Respect for Belongings",
+            "subtitle": "Respecting belongings means caring for what you have, and what others trust you with.",
+            "image": "",
+            "imageAlt": "A teen carefully putting away shared belongings",
+            "objectives": [
+              "Understand responsibility, care, and accountability for belongings."
+            ],
+            "startLabel": "Let's Get Started"
+          },
+          "exercises": [
+            {
+              "id": "respect-advanced-w3-warmup",
+              "type": "sorting-game",
+              "order": 1,
+              "prompt": "Warm-Up: Handle with Care or Not?",
+              "title": "Handle with Care or Not?",
+              "badgeIcon": "🎮",
+              "badge": "Sorting Game",
+              "focusIcon": "🧰",
+              "focusHeading": "Responsibility Focus for Learners",
+              "focusPoints": [
+                "Careful handling protects things we use and share",
+                "Careless handling damages belongings and breaks trust",
+                "Taking responsibility means fixing what we accidentally damage"
+              ],
+              "instruction": "Drag each action into the correct box.",
+              "items": [
+                {
+                  "id": "books-shelf",
+                  "label": "Putting books neatly on a shelf",
+                  "correctBinId": "careful"
+                },
+                {
+                  "id": "devices-floor",
+                  "label": "Leaving devices on the floor",
+                  "correctBinId": "careless"
+                },
+                {
+                  "id": "returning-item",
+                  "label": "Returning a borrowed item",
+                  "correctBinId": "careful"
+                },
+                {
+                  "id": "writing-notebook",
+                  "label": "Writing on someone's notebook without permission",
+                  "correctBinId": "careless"
+                },
+                {
+                  "id": "fixing-damage",
+                  "label": "Fixing something you accidentally damaged",
+                  "correctBinId": "careful"
+                }
+              ],
+              "bins": [
+                {
+                  "id": "careful",
+                  "icon": "✅",
+                  "label": "Careful Handling",
+                  "variant": "positive"
+                },
+                {
+                  "id": "careless",
+                  "icon": "❌",
+                  "label": "Careless Handling",
+                  "variant": "negative"
+                }
+              ],
+              "feedbackText": "Careful handling shows respect for belongings — careless handling breaks trust.",
+              "parentNote": "Parents: please help your child with this exercise.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w3-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: Sena and the Headphones",
+              "heading": "Sena and the Headphones",
+              "subtitle": "Follow along as Sena learns that respect means owning up when something goes wrong.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "Borrowed Headphones",
+                  "text": "Sena borrowed her cousin's headphones."
+                },
+                {
+                  "image": "",
+                  "title": "An Accident",
+                  "text": "She tossed them in her bag without the case — and the wire snapped."
+                },
+                {
+                  "image": "",
+                  "title": "Panic",
+                  "text": "She panicked. She had choices: ignore it… hide it… or respect the owner."
+                },
+                {
+                  "image": "",
+                  "title": "Telling the Truth",
+                  "text": "So she told the truth and offered to share her savings to repair them."
+                },
+                {
+                  "image": "",
+                  "title": "Fixing It Together",
+                  "text": "Her cousin appreciated the honesty — and they fixed them together."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Respect means treating belongings as if they matter — because they do."
+            },
+            {
+              "id": "respect-advanced-w3-discussion",
+              "type": "discussion-prompt-samples",
+              "order": 3,
+              "prompt": "Discussion Prompts and Sample Answers",
+              "badge": "💬 Discussion Points",
+              "title": "Discussion Points",
+              "subtitle": "Type your own answer first — then see the sample answer.",
+              "prompts": [
+                {
+                  "id": "respect-w3-dps-1",
+                  "question": "Why is caring for belongings a sign of respect?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "It shows you appreciate what you have and what others trust you with."
+                  ]
+                },
+                {
+                  "id": "respect-w3-dps-2",
+                  "question": "What should you do when you damage something you borrowed?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Tell the owner immediately and offer to fix it."
+                  ]
+                },
+                {
+                  "id": "respect-w3-dps-3",
+                  "question": "Why is responsibility important?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "People trust you more when you take care of things."
+                  ]
+                },
+                {
+                  "id": "respect-w3-dps-4",
+                  "question": "What is one belonging you could take better care of?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "My school bag, water bottle, or tablet."
+                  ]
+                },
+                {
+                  "id": "respect-w3-dps-5",
+                  "question": "How does respect for belongings show maturity?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "It means you understand the value of things."
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Sample Answer",
+              "nextSampleLabel": "Show sample answer",
+              "nextQuestionLabel": "Next Question",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Respect for belongings is responsibility in action — it builds trust and shows maturity.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w3-activity",
+              "type": "share-prompt",
+              "order": 4,
+              "prompt": "My Responsibility Map",
+              "fields": [
+                {
+                  "id": "item1",
+                  "label": "Item 1 — something I use daily",
+                  "placeholder": "e.g. My school bag"
+                },
+                {
+                  "id": "item1-care",
+                  "label": "How I will care for it",
+                  "placeholder": "I will care for it by…"
+                },
+                {
+                  "id": "item2",
+                  "label": "Item 2 — something I use daily",
+                  "placeholder": "e.g. My water bottle"
+                },
+                {
+                  "id": "item2-care",
+                  "label": "How I will care for it",
+                  "placeholder": "I will care for it by…"
+                },
+                {
+                  "id": "item3",
+                  "label": "Item 3 — something I use daily",
+                  "placeholder": "e.g. My tablet or phone"
+                },
+                {
+                  "id": "item3-care",
+                  "label": "How I will care for it",
+                  "placeholder": "I will care for it by…"
+                }
+              ],
+              "submitLabel": "Save My Responsibility Map",
+              "groupLabel": "My Responsibility Map",
+              "howItWorks": [
+                "List three items you use every day",
+                "Write one way you will care for each one",
+                "Your trainer can see your responses"
+              ],
+              "teacherFollowUp": "Great work — now you have a plan for caring for the things you use every day.",
+              "offerCardDownload": true,
+              "cardTitle": "My Responsibility Map"
+            },
+            {
+              "id": "respect-advanced-w3-challenge",
+              "type": "challenge-tracker",
+              "order": 5,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "The Care Challenge",
+              "subtitle": "Return or organize something that isn't yours.",
+              "image": "",
+              "imageAlt": "A student organizing a borrowed item to return it",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "This week, look for one moment to practise this:",
+              "dailyChallengeItems": [
+                "Return or organize something that isn't yours."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child this week: what did you return or organize, and for whom?",
+                "Remind them that caring for belongings — their own and others' — is a form of respect.",
+                "Celebrate the moment they practise it, however small.",
+                "Tick it together once they've done it, so the win feels shared."
+              ],
+              "trackerHeading": "Respect & Reflection",
+              "trackerIntro": "Track your moment of care. Tick it once you've returned or organized something this week.",
+              "days": [
+                "This Week"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w3-confidence-link",
+              "type": "confidence-link",
+              "order": 6,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Respect Shows",
+              "headingLine2": "In How I Care",
+              "subtitle": "Respect for belongings is respect for the people who trust you with them.",
+              "trainerQuote": "Respect for belongings is respect for the people who trust you with them.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Respect shows in how I care for what I use.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: taking care of what you use shows you understand its value.",
+              "week": 3,
+              "completeLabel": "Complete Week 3"
+            }
+          ]
+        },
+        {
+          "id": "respect-advanced-week-4",
+          "title": "Respect for Differences",
+          "order": 4,
+          "week": 4,
+          "stage": "Inclusion",
+          "introWelcome": {
+            "weekPill": "📅 Week 4",
+            "titleStart": "Respect for",
+            "titleAccent": "Differences",
+            "subtitle": "Diversity, inclusion, empathy, and cultural respect.",
+            "objectiveIcon": "🌍",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Understand how diversity, inclusion, empathy, and cultural respect connect us to one another.",
+            "startLabel": "Let's Get Started",
+            "image": "",
+            "imageAlt": "Teens from different backgrounds respecting one another"
+          },
+          "exercises": [
+            {
+              "id": "respect-advanced-w4-warmup",
+              "type": "discussion-true-false",
+              "order": 1,
+              "prompt": "Warm-Up: \"Agree or Disagree?\" Opinion Poll",
+              "heading": "\"Agree or Disagree?\" Opinion Poll",
+              "subtitle": "Tap Agree or Disagree — a wrong pick lets you try again.",
+              "trueLabel": "Agree",
+              "falseLabel": "Disagree",
+              "reviewHeading": "Great Answers!",
+              "continueLabel": "Continue →",
+              "statements": [
+                {
+                  "id": "respect-w4-tf-1",
+                  "text": "It's okay for people to enjoy different hobbies.",
+                  "answer": true
+                },
+                {
+                  "id": "respect-w4-tf-2",
+                  "text": "Everyone should think the same way.",
+                  "answer": false
+                },
+                {
+                  "id": "respect-w4-tf-3",
+                  "text": "Differences make groups stronger.",
+                  "answer": true
+                },
+                {
+                  "id": "respect-w4-tf-4",
+                  "text": "We should only play with people who look like us.",
+                  "answer": false
+                },
+                {
+                  "id": "respect-w4-tf-5",
+                  "text": "Respect means celebrating differences.",
+                  "answer": true
+                }
+              ]
+            },
+            {
+              "id": "respect-advanced-w4-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: Esi's Choir Surprise",
+              "heading": "Esi's Choir Surprise",
+              "subtitle": "Follow along as Esi discovers how a different voice makes the team better.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "A New Choir",
+                  "text": "Esi joined a new youth choir."
+                },
+                {
+                  "image": "",
+                  "title": "A Different Style",
+                  "text": "One girl sang with a different style — soft, gentle, almost shy."
+                },
+                {
+                  "image": "",
+                  "title": "Whispers",
+                  "text": "Some kids whispered, \"She's too quiet for the group.\""
+                },
+                {
+                  "image": "",
+                  "title": "A Beautiful Blend",
+                  "text": "But during a duet, her soft voice blended beautifully with Esi's strong tone."
+                },
+                {
+                  "image": "",
+                  "title": "Everyone Clapped",
+                  "text": "Everyone clapped."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Different doesn't mean wrong — it makes the whole team better."
+            },
+            {
+              "id": "respect-advanced-w4-discussion",
+              "type": "discussion-prompt-samples",
+              "order": 3,
+              "prompt": "Discussion Prompts and Sample Answers",
+              "badge": "💬 Discussion Points",
+              "title": "Discussion Points",
+              "subtitle": "Type your own answer first — then see the sample answer.",
+              "prompts": [
+                {
+                  "id": "respect-w4-dps-1",
+                  "question": "Why are differences important in a team?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Everyone brings something unique."
+                  ]
+                },
+                {
+                  "id": "respect-w4-dps-2",
+                  "question": "What happens when we make fun of differences?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "People feel hurt, left out, or unsafe."
+                  ]
+                },
+                {
+                  "id": "respect-w4-dps-3",
+                  "question": "How can you show respect to someone different from you?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Listen to them, include them, be kind."
+                  ]
+                },
+                {
+                  "id": "respect-w4-dps-4",
+                  "question": "Describe one difference you appreciate in others.",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Different talents, accents, skin tones, cultures."
+                  ]
+                },
+                {
+                  "id": "respect-w4-dps-5",
+                  "question": "What does inclusion mean to you?",
+                  "placeholder": "Type your answer here…",
+                  "sampleAnswers": [
+                    "Making sure everyone gets a chance to join."
+                  ]
+                }
+              ],
+              "submitLabel": "Submit my answer",
+              "yourAnswerLabel": "Your Answer",
+              "sampleAnswersLabel": "Sample Answer",
+              "nextSampleLabel": "Show sample answer",
+              "nextQuestionLabel": "Next Question",
+              "seeKeyLessonLabel": "See the Key Lesson",
+              "keyLessonLabel": "Key Lesson",
+              "keyLessonText": "Respect for differences means listening, including, and valuing what makes each person unique.",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w4-activity",
+              "type": "diversity-poster",
+              "order": 4,
+              "prompt": "Our Differences Make Us Shine",
+              "badge": "🎨 My Activity",
+              "title": "Our Differences Make Us Shine",
+              "subtitle": "Build a collage of different people, each contributing their own strength to the group!",
+              "namePlaceholder": "Name your poster…",
+              "figuresHeading": "Add Different Contributors",
+              "figures": [
+                {
+                  "id": "dp-w4-f1",
+                  "emoji": "🧑🏻‍🦱",
+                  "label": "Great at organizing"
+                },
+                {
+                  "id": "dp-w4-f2",
+                  "emoji": "🧑🏿‍🦲",
+                  "label": "Great at leading"
+                },
+                {
+                  "id": "dp-w4-f3",
+                  "emoji": "👧🏽",
+                  "label": "Loves painting"
+                },
+                {
+                  "id": "dp-w4-f4",
+                  "emoji": "👦🏾",
+                  "label": "Loves football"
+                },
+                {
+                  "id": "dp-w4-f5",
+                  "emoji": "🧕🏻",
+                  "label": "Loves reading"
+                },
+                {
+                  "id": "dp-w4-f6",
+                  "emoji": "👦🏼‍🦽",
+                  "label": "Rolls in style"
+                },
+                {
+                  "id": "dp-w4-f7",
+                  "emoji": "👧🏿",
+                  "label": "Loves music"
+                },
+                {
+                  "id": "dp-w4-f8",
+                  "emoji": "🧑🏽‍🦰",
+                  "label": "Loves science"
+                }
+              ],
+              "uploadHeading": "Or add a real friend:",
+              "uploadButtonLabel": "Upload a Photo",
+              "posterSectionHeading": "Your Poster",
+              "posterEmptyText": "Your poster is empty — tap some contributors above or upload a photo to get started!",
+              "footerTagline": "✨ Every difference makes our group shine brighter! ✨",
+              "startOverLabel": "Start Over",
+              "saveLabel": "Save Poster",
+              "parentNote": "Parents, please help your child upload a photo if they choose to add one."
+            },
+            {
+              "id": "respect-advanced-w4-challenge",
+              "type": "challenge-tracker",
+              "order": 5,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "The Shine Challenge",
+              "subtitle": "Say something positive about someone's unique ability.",
+              "image": "",
+              "imageAlt": "A student complimenting a classmate",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "This week, look for one moment to practise this:",
+              "dailyChallengeItems": [
+                "Say something positive about someone's unique ability."
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child this week: who did you compliment, and what did you say?",
+                "Remind them that noticing what makes someone unique is a form of respect.",
+                "Celebrate the moment they practise it, however small.",
+                "Tick it together once they've done it, so the win feels shared."
+              ],
+              "trackerHeading": "Respect & Reflection",
+              "trackerIntro": "Track your compliment. Tick it once you've spoken up about someone's unique ability this week.",
+              "days": [
+                "This Week"
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "respect-advanced-w4-confidence-link",
+              "type": "confidence-link",
+              "order": 6,
+              "prompt": "Final Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Respect Welcomes",
+              "headingLine2": "Everyone",
+              "subtitle": "You've practised self-respect, respect for others, for belongings, and for differences — now respect is something you carry with you every day.",
+              "trainerQuote": "You've practised self-respect, respect for others, for belongings, and for differences — now respect is something you carry with you every day.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Respect welcomes everyone.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: respect isn't a one-time lesson — it's a habit you keep building.",
+              "week": 4,
+              "completeLabel": "Complete Week 4"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "module-speaking-advanced",

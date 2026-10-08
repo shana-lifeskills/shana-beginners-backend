@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { authenticate } = require('../middleware/auth');
+const { authenticate, authorize } = require('../middleware/auth');
 const paymentService = require('../services/paymentService');
 const paystackClient = require('../services/paystackClient');
 
@@ -16,6 +16,20 @@ function resolveTargetUserId(req) {
   }
   return studentId;
 }
+
+// Admin payments ledger — every transaction across every student, filterable
+// by student/module/status/date range. Instructor/admin only; a student
+// asking about their own payments goes through /unlocked-modules instead,
+// which deliberately exposes nothing about amounts or other students.
+router.get('/', authenticate, authorize('instructor', 'admin'), async (req, res, next) => {
+  try {
+    const { studentId, moduleId, status, from, to } = req.query;
+    const payments = await paymentService.listPayments({ studentId, moduleId, status, from, to });
+    res.json(payments);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get('/unlocked-modules', authenticate, async (req, res, next) => {
   try {

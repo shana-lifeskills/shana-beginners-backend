@@ -25,6 +25,54 @@ function isDemoMode() {
 }
 
 class PaymentService {
+  /**
+   * The admin payments ledger — every payment attempt (any status, so a
+   * failed/pending one is visible too, not just successes), newest first,
+   * optionally narrowed by student, module, status, or a paidAt date range.
+   * Joins in the student's name/email (via the existing User association)
+   * and the module's title (CurriculumModule has no FK/association to
+   * Payment, so this batch-fetches titles separately and merges in JS rather
+   * than adding one just for a display label).
+   */
+  async listPayments({ studentId, moduleId, status, from, to } = {}) {
+    const where = {};
+    if (studentId) where.userId = studentId;
+    if (moduleId) where.moduleId = moduleId;
+    if (status) where.status = status;
+    if (from || to) {
+      where.paidAt = {};
+      if (from) where.paidAt[Op.gte] = new Date(from);
+      if (to) where.paidAt[Op.lte] = new Date(to);
+    }
+
+    const payments = await Payment.findAll({
+      where,
+      include: [{ model: User, attributes: ['id', 'firstName', 'lastName', 'email'] }],
+      order: [['createdAt', 'DESC']],
+    });
+
+    const moduleIds = [...new Set(payments.map((p) => p.moduleId).filter(Boolean))];
+    const modules = moduleIds.length
+      ? await CurriculumModule.findAll({ where: { id: moduleIds }, attributes: ['id', 'title'] })
+      : [];
+    const titleById = new Map(modules.map((m) => [m.id, m.title]));
+
+    return payments.map((p) => ({
+      id: p.id,
+      reference: p.reference,
+      amountPesewas: p.amountPesewas,
+      currency: p.currency,
+      status: p.status,
+      channel: p.channel,
+      provider: p.provider,
+      moduleId: p.moduleId,
+      moduleTitle: p.moduleId ? (titleById.get(p.moduleId) ?? p.moduleId) : null,
+      paidAt: p.paidAt,
+      createdAt: p.createdAt,
+      student: p.User ? { id: p.User.id, firstName: p.User.firstName, lastName: p.User.lastName, email: p.User.email } : null,
+    }));
+  }
+
   /** Pay-as-you-go: a payment must name a real, unlockable module. Games are
    *  always free (never gated behind payment), so they're rejected here same
    *  as a module id that doesn't exist at all — there's nothing to "unlock". */

@@ -17,6 +17,7 @@ const assignmentRoutes = require("./src/routes/moduleAssignments");
 const paymentRoutes = require("./src/routes/payments");
 const taskRoutes = require("./src/routes/tasks");
 const paymentReminderRoutes = require("./src/routes/paymentReminders");
+const analyticsRoutes = require("./src/routes/analytics");
 
 const cron = require("node-cron");
 const paymentReminderService = require("./src/services/paymentReminderService");
@@ -81,6 +82,7 @@ app.use("/api/assignments", assignmentRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/payment-reminders", paymentReminderRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 app.use(errorHandler);
 
