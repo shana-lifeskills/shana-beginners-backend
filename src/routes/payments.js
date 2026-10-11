@@ -42,8 +42,8 @@ router.get('/unlocked-modules', authenticate, async (req, res, next) => {
 
 router.post('/initialize', authenticate, async (req, res, next) => {
   try {
-    const { moduleId } = req.body;
-    const result = await paymentService.initializePayment(req.user.id, moduleId);
+    const { kind, moduleId, moduleIds } = req.body;
+    const result = await paymentService.initializePayment(req.user.id, { kind, moduleId, moduleIds });
     res.json(result);
   } catch (err) {
     next(err);
@@ -67,8 +67,8 @@ router.post('/verify', authenticate, async (req, res, next) => {
 // (Charge, not Inline) with its own status flow; see paymentService for details.
 router.post('/mobile-money/initiate', authenticate, async (req, res, next) => {
   try {
-    const { phone, provider, moduleId } = req.body;
-    const result = await paymentService.initiateMobileMoneyCharge(req.user.id, req.user.email, { phone, provider, moduleId });
+    const { phone, provider, kind, moduleId, moduleIds } = req.body;
+    const result = await paymentService.initiateMobileMoneyCharge(req.user.id, req.user.email, { phone, provider, kind, moduleId, moduleIds });
     res.json(result);
   } catch (err) {
     next(err);

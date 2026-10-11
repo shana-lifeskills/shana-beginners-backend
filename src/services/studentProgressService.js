@@ -10,8 +10,8 @@ const {
   CurriculumModule,
   CurriculumLesson,
   CurriculumExercise,
-  Payment,
 } = require('../models');
+const levelService = require('./levelService');
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -25,19 +25,32 @@ const httpError = (status, message) => Object.assign(new Error(message), { statu
  * that was archived mid-lesson is still allowed, so no child loses a step.
  */
 async function assertModule(moduleId, { activeOnly }) {
-  const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt'] });
+  const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt', 'trackName', 'ageGroup'] });
   if (!mod || (activeOnly && mod.archivedAt !== null)) throw httpError(404, 'Module not found');
   return mod;
 }
 
 /** Pay-as-you-go gate: games are always free; every other module needs a
- *  successful Payment row for this exact student + module. Enforced here
- *  (not just hidden behind a lock icon in the UI) so the API itself can't be
- *  called directly to skip payment. */
+ *  successful Payment row for this exact student + module (directly, via a
+ *  bundle, or via an active annual subscription — see paymentService's
+ *  getUnlockedModuleIds). Enforced here (not just hidden behind a lock icon
+ *  in the UI) so the API itself can't be called directly to skip payment. */
 async function assertPaidFor(userId, mod) {
   if (mod.category === 'game') return;
-  const payment = await Payment.findOne({ where: { userId, moduleId: mod.id, status: 'success' }, attributes: ['id'] });
-  if (!payment) throw httpError(402, 'Payment required to unlock this module');
+  // Required lazily, not at module load time, to avoid a circular require —
+  // paymentService itself doesn't depend on studentProgressService.
+  const paymentService = require('./paymentService');
+  const unlockedModuleIds = await paymentService.getUnlockedModuleIds(userId);
+  if (!unlockedModuleIds.includes(mod.id)) throw httpError(402, 'Payment required to unlock this module');
+}
+
+/** Level-sequencing gate, independent of payment: a module stays locked
+ *  until every module in the previous Level is completed, even if this one
+ *  is already paid for. See services/levelService.js. */
+async function assertLevelUnlocked(userId, mod) {
+  if (mod.category === 'game') return;
+  const unlocked = await levelService.isLevelUnlocked(userId, mod);
+  if (!unlocked) throw httpError(403, 'Complete the previous level before starting this module.');
 }
 
 async function assertStep(moduleId, lessonId, exerciseId) {
@@ -65,6 +78,7 @@ class StudentProgressService {
   async startOrResumeModule(userId, moduleId, { resumeLessonId, resumeExerciseId }) {
     const mod = await assertModule(moduleId, { activeOnly: true });
     await assertPaidFor(userId, mod);
+    await assertLevelUnlocked(userId, mod);
     const [progress, created] = await StudentModuleProgress.findOrCreate({
       where: { userId, moduleId },
       defaults: {

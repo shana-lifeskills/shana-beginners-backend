@@ -2,10 +2,23 @@ const crypto = require('crypto');
 const { Op } = require('sequelize');
 const { sequelize, Payment, User, CurriculumModule } = require('../models');
 const paystackClient = require('./paystackClient');
+const levelService = require('./levelService');
 
 /** GH₵399.00 course-access price — server-owned, never trusted from the
  *  client. Overridable via env so pricing can change without a code deploy. */
 const COURSE_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.COURSE_ACCESS_AMOUNT_PESEWAS, 10) || 39900;
+
+/** Fixed bundle size (number of modules per bundle purchase) — a plain env
+ *  constant, not an admin-editable catalog, per the confirmed MVP scope.
+ *  Changing this only affects *new* bundle purchases; a historical bundle
+ *  row's own `bundleModuleIds.length` is what it actually unlocked. */
+const BUNDLE_SIZE = parseInt(process.env.BUNDLE_SIZE, 10) || 3;
+
+/** GH₵999.00 default 3-module bundle price — same "server-owned, env-overridable" convention as COURSE_ACCESS_AMOUNT_PESEWAS. */
+const BUNDLE_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.BUNDLE_ACCESS_AMOUNT_PESEWAS, 10) || 99900;
+
+/** GH₵2999.00 default one-time annual all-access price. */
+const ANNUAL_ACCESS_AMOUNT_PESEWAS = parseInt(process.env.ANNUAL_ACCESS_AMOUNT_PESEWAS, 10) || 299900;
 
 /** Paystack's Ghana mobile money provider codes — 'vod' is Paystack's (legacy
  *  Vodafone Cash) code for what's now branded Telecel Cash; the code itself
@@ -75,31 +88,95 @@ class PaymentService {
 
   /** Pay-as-you-go: a payment must name a real, unlockable module. Games are
    *  always free (never gated behind payment), so they're rejected here same
-   *  as a module id that doesn't exist at all — there's nothing to "unlock". */
+   *  as a module id that doesn't exist at all — there's nothing to "unlock".
+   *  Returns the module row (trackName/ageGroup included) so bundle
+   *  validation can also run the Level-sequencing check against it. */
   async _assertUnlockableModule(moduleId) {
     if (!moduleId || typeof moduleId !== 'string') {
       throw Object.assign(new Error('moduleId is required'), { status: 400 });
     }
-    const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt'] });
+    const mod = await CurriculumModule.findByPk(moduleId, { attributes: ['id', 'category', 'archivedAt', 'trackName', 'ageGroup'] });
     if (!mod || mod.archivedAt !== null) {
       throw Object.assign(new Error('Module not found'), { status: 404 });
     }
     if (mod.category === 'game') {
       throw Object.assign(new Error('Games are free and never need payment'), { status: 400 });
     }
+    return mod;
+  }
+
+  /**
+   * Resolves what a payment actually charges for and grants, from `kind`
+   * alone — the amount is always server-computed here, never accepted from
+   * the client, for every kind.
+   *  - 'module' (default): today's single-module flow.
+   *  - 'bundle': exactly BUNDLE_SIZE modules, each individually unlockable
+   *    AND currently Level-unlocked for this student — rejecting a
+   *    still-locked module here is what stops a bundle purchase from
+   *    bypassing Level-sequencing (see levelService.isLevelUnlocked).
+   *  - 'annual': no per-module validation; covers everything the student
+   *    can ever reach.
+   */
+  async _resolveAmountAndKind(userId, { kind = 'module', moduleId, moduleIds }) {
+    if (kind === 'bundle') {
+      if (!Array.isArray(moduleIds) || moduleIds.length !== BUNDLE_SIZE) {
+        throw Object.assign(new Error(`A bundle requires exactly ${BUNDLE_SIZE} module ids`), { status: 400 });
+      }
+      for (const id of moduleIds) {
+        const mod = await this._assertUnlockableModule(id);
+        const unlocked = await levelService.isLevelUnlocked(userId, mod);
+        if (!unlocked) {
+          throw Object.assign(new Error(`Module "${id}" is still Level-locked and can't be bundled yet`), { status: 403 });
+        }
+      }
+      return { amountPesewas: BUNDLE_ACCESS_AMOUNT_PESEWAS, moduleId: null, bundleModuleIds: moduleIds };
+    }
+    if (kind === 'annual') {
+      return { amountPesewas: ANNUAL_ACCESS_AMOUNT_PESEWAS, moduleId: null, bundleModuleIds: null };
+    }
+    await this._assertUnlockableModule(moduleId);
+    return { amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS, moduleId, bundleModuleIds: null };
   }
 
   /** Every module the student has an already-successful payment for — the
    *  real source of truth for "is this module unlocked", used by both the
    *  dashboard (what to show locked) and startOrResumeModule (server-side
-   *  enforcement, not just a frontend lock icon). */
+   *  enforcement, not just a frontend lock icon). Unions three sources:
+   *  direct per-module payments, flattened bundle grants, and (if an active
+   *  annual subscription exists) every currently-active module matching the
+   *  student's *current* ageGroup — recomputed fresh every call, never
+   *  cached or frozen at purchase time, so a later age-group change or a
+   *  newly-added module is picked up automatically. */
   async getUnlockedModuleIds(userId) {
-    const rows = await Payment.findAll({
-      where: { userId, status: 'success', moduleId: { [Op.ne]: null } },
+    const directRows = await Payment.findAll({
+      where: { userId, status: 'success', kind: 'module', moduleId: { [Op.ne]: null } },
       attributes: ['moduleId'],
       group: ['moduleId'],
     });
-    return rows.map((r) => r.moduleId);
+    const moduleIds = new Set(directRows.map((r) => r.moduleId));
+
+    const bundleRows = await Payment.findAll({
+      where: { userId, status: 'success', kind: 'bundle' },
+      attributes: ['bundleModuleIds'],
+    });
+    for (const row of bundleRows) {
+      for (const id of row.bundleModuleIds ?? []) moduleIds.add(id);
+    }
+
+    const activeAnnual = await Payment.findOne({
+      where: { userId, status: 'success', kind: 'annual', expiresAt: { [Op.gt]: new Date() } },
+      attributes: ['id'],
+    });
+    if (activeAnnual) {
+      const user = await User.findByPk(userId, { attributes: ['ageGroup'] });
+      const everyModule = await CurriculumModule.findAll({
+        where: { category: 'life-skills', archivedAt: null, ageGroup: user?.ageGroup },
+        attributes: ['id'],
+      });
+      for (const mod of everyModule) moduleIds.add(mod.id);
+    }
+
+    return [...moduleIds];
   }
 
   /** Creates a pending Payment row with a server-generated reference the client
@@ -107,15 +184,17 @@ class PaymentService {
    *  this service itself issued. In demo mode, `publicKey` is omitted so the
    *  frontend shows its own mock card form instead of Paystack's real popup
    *  (which would reject a dummy key immediately, before any card details). */
-  async initializePayment(userId, moduleId) {
-    await this._assertUnlockableModule(moduleId);
+  async initializePayment(userId, { kind = 'module', moduleId, moduleIds } = {}) {
+    const resolved = await this._resolveAmountAndKind(userId, { kind, moduleId, moduleIds });
 
     const reference = `shana_${crypto.randomUUID()}`;
     await Payment.create({
       userId,
       reference,
-      moduleId,
-      amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
+      kind,
+      moduleId: resolved.moduleId,
+      bundleModuleIds: resolved.bundleModuleIds,
+      amountPesewas: resolved.amountPesewas,
       currency: 'GHS',
       channel: 'card',
       status: 'pending',
@@ -123,7 +202,7 @@ class PaymentService {
 
     return {
       reference,
-      amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
+      amountPesewas: resolved.amountPesewas,
       publicKey: isDemoMode() ? undefined : process.env.PAYSTACK_PUBLIC_KEY,
     };
   }
@@ -140,21 +219,23 @@ class PaymentService {
    *    the frontend polls verifyAndRecordPayment() (the same /verify
    *    endpoint card checkout uses) until it resolves.
    */
-  async initiateMobileMoneyCharge(userId, email, { phone, provider, moduleId }) {
+  async initiateMobileMoneyCharge(userId, email, { phone, provider, kind = 'module', moduleId, moduleIds }) {
     if (!MOBILE_MONEY_PROVIDERS.includes(provider)) {
       throw Object.assign(new Error('Unsupported mobile money provider'), { status: 400 });
     }
     if (!phone || typeof phone !== 'string' || !/^[0-9+]{9,15}$/.test(phone.trim())) {
       throw Object.assign(new Error('Enter a valid phone number'), { status: 400 });
     }
-    await this._assertUnlockableModule(moduleId);
+    const resolved = await this._resolveAmountAndKind(userId, { kind, moduleId, moduleIds });
 
     const reference = `shana_${crypto.randomUUID()}`;
     const payment = await Payment.create({
       userId,
       reference,
-      moduleId,
-      amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
+      kind,
+      moduleId: resolved.moduleId,
+      bundleModuleIds: resolved.bundleModuleIds,
+      amountPesewas: resolved.amountPesewas,
       currency: 'GHS',
       channel: 'mobile_money',
       provider,
@@ -172,7 +253,7 @@ class PaymentService {
 
     const data = await paystackClient.initiateMobileMoneyCharge({
       email,
-      amountPesewas: COURSE_ACCESS_AMOUNT_PESEWAS,
+      amountPesewas: resolved.amountPesewas,
       reference,
       phone: phone.trim(),
       provider,
@@ -266,11 +347,41 @@ class PaymentService {
     throw Object.assign(new Error('Payment could not be verified'), { status: 422 });
   }
 
-  /** Records a payment as successful and grants entitlement, atomically. */
+  /** Records a payment as successful and grants entitlement, atomically.
+   *  For kind='annual', sets expiresAt (entitlement expiry starts now, not
+   *  at initial pending-creation time). For kind='bundle', re-validates
+   *  each module id right before committing — a module could have been
+   *  archived, or the student's Level status could have shifted, in the
+   *  minutes between initialize and a mobile-money verify; any id that no
+   *  longer qualifies is silently dropped (logged) rather than failing an
+   *  already-Paystack-approved payment. */
   async _markSuccess(payment) {
+    const paidAt = new Date();
+    let bundleModuleIds = payment.bundleModuleIds;
+    let expiresAt = null;
+
+    if (payment.kind === 'annual') {
+      expiresAt = new Date(paidAt);
+      expiresAt.setFullYear(expiresAt.getFullYear() + 1);
+    }
+
+    if (payment.kind === 'bundle' && Array.isArray(bundleModuleIds)) {
+      const stillValid = [];
+      for (const id of bundleModuleIds) {
+        try {
+          const mod = await this._assertUnlockableModule(id);
+          if (await levelService.isLevelUnlocked(payment.userId, mod)) stillValid.push(id);
+          else console.warn(`Bundle payment ${payment.reference}: module ${id} became Level-locked before verification — dropped.`);
+        } catch (err) {
+          console.warn(`Bundle payment ${payment.reference}: module ${id} is no longer valid — dropped. (${err.message})`);
+        }
+      }
+      bundleModuleIds = stillValid;
+    }
+
     const transaction = await sequelize.transaction();
     try {
-      await payment.update({ status: 'success', paidAt: new Date() }, { transaction });
+      await payment.update({ status: 'success', paidAt, expiresAt, bundleModuleIds }, { transaction });
       await User.update({ hasPaid: true }, { where: { id: payment.userId }, transaction });
       await transaction.commit();
     } catch (error) {
