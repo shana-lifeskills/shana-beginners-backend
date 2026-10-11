@@ -38,4 +38,12 @@ router.get('/module-completion', async (req, res, next) => {
   }
 });
 
+router.get('/top-students', async (req, res, next) => {
+  try {
+    res.json(await analyticsService.topStudents());
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

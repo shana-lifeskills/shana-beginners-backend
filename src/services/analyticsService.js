@@ -1,5 +1,5 @@
 const { Op, fn, col, literal } = require('sequelize');
-const { sequelize, Payment, User, StudentModuleProgress, CurriculumModule } = require('../models');
+const { sequelize, Payment, User, StudentModuleProgress, CurriculumModule, StarLog, BadgeLog, TrophyLog } = require('../models');
 
 const TOP_N = 10;
 
@@ -123,6 +123,50 @@ class AnalyticsService {
           completionRate: startedCount === 0 ? 0 : Math.round((completedCount / startedCount) * 100),
         };
       });
+  }
+
+  /** Top 5 students by stars earned — counted from StarLog, the same
+   *  per-award ledger the student-facing reward shelf totals come from
+   *  (see studentProgressService.getRewardTotals); `User.stars` is a stale,
+   *  never-written column, not the real total. */
+  async topStudents() {
+    const starRows = await StarLog.findAll({
+      attributes: ['userId', [fn('COUNT', col('id')), 'stars']],
+      group: ['userId'],
+      order: [[fn('COUNT', col('id')), 'DESC']],
+      limit: 5,
+      raw: true,
+    });
+    if (starRows.length === 0) return [];
+
+    const userIds = starRows.map((r) => r.userId);
+    const [users, badgeRows, trophyRows] = await Promise.all([
+      User.findAll({ where: { id: userIds }, attributes: ['id', 'firstName', 'lastName'] }),
+      BadgeLog.findAll({
+        where: { userId: userIds },
+        attributes: ['userId', [fn('COUNT', col('id')), 'badges']],
+        group: ['userId'],
+        raw: true,
+      }),
+      TrophyLog.findAll({
+        where: { userId: userIds },
+        attributes: ['userId', [fn('COUNT', col('id')), 'trophies']],
+        group: ['userId'],
+        raw: true,
+      }),
+    ]);
+
+    const nameById = new Map(users.map((u) => [u.id, `${u.firstName} ${u.lastName}`.trim()]));
+    const badgesById = new Map(badgeRows.map((r) => [r.userId, parseInt(r.badges, 10)]));
+    const trophiesById = new Map(trophyRows.map((r) => [r.userId, parseInt(r.trophies, 10)]));
+
+    return starRows.map((r) => ({
+      id: r.userId,
+      name: nameById.get(r.userId) ?? 'Unknown student',
+      stars: parseInt(r.stars, 10),
+      badges: badgesById.get(r.userId) ?? 0,
+      trophies: trophiesById.get(r.userId) ?? 0,
+    }));
   }
 }
 
