@@ -1,10 +1,10 @@
 {
-  "exportedAt": "2026-10-07T21:11:04.879Z",
-  "source": "shana-e-learning-beginners@da8ab5f+uncommitted",
+  "exportedAt": "2026-10-12T08:35:05.556Z",
+  "source": "shana-e-learning-beginners@76d0ea7+uncommitted",
   "counts": {
     "modules": 46,
-    "lessons": 112,
-    "exercises": 535
+    "lessons": 113,
+    "exercises": 540
   },
   "modules": [
     {
@@ -31455,13 +31455,370 @@
     {
       "id": "module-listening-advanced",
       "title": "Listening Module",
-      "description": "Learn how to listen with your ears, eyes, and heart so others feel truly heard.",
+      "description": "Big Idea: Listening is not silence. It is active understanding.",
       "themeColor": "#2563EB",
       "icon": "👂",
       "category": "life-skills",
       "ageGroup": "advanced",
       "trackName": "Communication",
-      "lessons": []
+      "lessons": [
+        {
+          "id": "listening-advanced-week-1",
+          "title": "The Power of Being Fully Present",
+          "order": 1,
+          "week": 1,
+          "stage": "Awareness",
+          "introWelcome": {
+            "weekPill": "📅 Week 1",
+            "titleStart": "The Power of Being",
+            "titleAccent": "Fully Present",
+            "titleAccentColor": "coral",
+            "subtitle": "Listening is not silence. It is active understanding.",
+            "objectiveIcon": "👂",
+            "objectiveIconColor": "coral",
+            "objectiveHeading": "Objective",
+            "objectiveText": "Learners will be able to identify and demonstrate at least three characteristics of active listening and explain how active listening improves teamwork and leadership effectiveness.",
+            "startLabel": "Let's Get Started",
+            "startBtnColor": "coral",
+            "image": "/assets/images/teacher-welcome.png",
+            "imageAlt": "A warm, smiling teacher welcoming the class"
+          },
+          "exercises": [
+            {
+              "id": "listening-advanced-w1-warmup",
+              "type": "discussion-quiz",
+              "order": 1,
+              "prompt": "Warm Up: \"Spot the Listener\"",
+              "heading": "Spot the Listener",
+              "subtitle": "Read the situations and choose the best listener.",
+              "questions": [
+                {
+                  "id": "listening-w1-dq-1",
+                  "prompt": "During group work, Ama keeps checking her phone while Kojo speaks.",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq-1-a",
+                      "text": "She is listening well"
+                    },
+                    {
+                      "id": "listening-w1-dq-1-b",
+                      "text": "She is distracted"
+                    },
+                    {
+                      "id": "listening-w1-dq-1-c",
+                      "text": "She is multitasking effectively"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq-1-b"
+                },
+                {
+                  "id": "listening-w1-dq-2",
+                  "prompt": "When her friend shares a problem, Sarah nods, makes eye contact, and asks questions.",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq-2-a",
+                      "text": "Active listener"
+                    },
+                    {
+                      "id": "listening-w1-dq-2-b",
+                      "text": "Passive listener"
+                    },
+                    {
+                      "id": "listening-w1-dq-2-c",
+                      "text": "Not listening"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq-2-a"
+                },
+                {
+                  "id": "listening-w1-dq-3",
+                  "prompt": "If someone interrupts before you finish speaking, they are:",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq-3-a",
+                      "text": "Engaged"
+                    },
+                    {
+                      "id": "listening-w1-dq-3-b",
+                      "text": "Respectful"
+                    },
+                    {
+                      "id": "listening-w1-dq-3-c",
+                      "text": "Not fully listening"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq-3-c"
+                },
+                {
+                  "id": "listening-w1-dq-4",
+                  "prompt": "Listening requires:",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq-4-a",
+                      "text": "Silence only"
+                    },
+                    {
+                      "id": "listening-w1-dq-4-b",
+                      "text": "Attention and understanding"
+                    },
+                    {
+                      "id": "listening-w1-dq-4-c",
+                      "text": "Talking quickly"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq-4-b"
+                },
+                {
+                  "id": "listening-w1-dq-5",
+                  "prompt": "The biggest enemy of listening is:",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq-5-a",
+                      "text": "Patience"
+                    },
+                    {
+                      "id": "listening-w1-dq-5-b",
+                      "text": "Distraction"
+                    },
+                    {
+                      "id": "listening-w1-dq-5-c",
+                      "text": "Eye contact"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq-5-b"
+                }
+              ],
+              "reviewHeading": "Great Listening!",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "listening-advanced-w1-story",
+              "type": "story-carousel",
+              "order": 2,
+              "prompt": "Mini Story: The Debate Captain",
+              "heading": "The Debate Captain",
+              "subtitle": "Follow along as Kwame learns that leading means listening too.",
+              "slides": [
+                {
+                  "image": "",
+                  "title": "Debate Captain",
+                  "text": "Kwame was chosen as debate captain because he was confident and spoke clearly. But during practice, his teammates grew frustrated."
+                },
+                {
+                  "image": "",
+                  "title": "Cutting Them Off",
+                  "text": "Whenever someone suggested an idea, Kwame would cut them off: \"That won't work.\" \"No, we should do it my way.\" \"I already thought about that.\""
+                },
+                {
+                  "image": "",
+                  "title": "An Unexpected Argument",
+                  "text": "At the competition, the opposing team introduced a new argument. Kwame panicked — he had not listened carefully to his team's earlier warnings about this possibility."
+                },
+                {
+                  "image": "",
+                  "title": "\"You Speak Well, But You Don't Listen\"",
+                  "text": "After losing, one teammate finally said it plainly."
+                },
+                {
+                  "image": "",
+                  "title": "A New Approach",
+                  "text": "Kwame reflected deeply. The next week, he asked each member to share ideas. He wrote them down. He asked questions before responding."
+                },
+                {
+                  "image": "",
+                  "title": "Listening Wins",
+                  "text": "At the next competition, their arguments were stronger — not because Kwame spoke more, but because he listened more."
+                }
+              ],
+              "continueLabel": "Continue →",
+              "takeHome": "Leaders who don't listen lead alone."
+            },
+            {
+              "id": "listening-advanced-w1-discussion",
+              "type": "discussion-quiz",
+              "order": 3,
+              "prompt": "Discussion – Multiple Choice Only",
+              "heading": "Discussion Points",
+              "subtitle": "Pick the answer that fits best — if it's not quite right, you'll get to try again!",
+              "questions": [
+                {
+                  "id": "listening-w1-dq2-1",
+                  "prompt": "Why did Kwame lose the first debate?",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq2-1-a",
+                      "text": "He was not smart"
+                    },
+                    {
+                      "id": "listening-w1-dq2-1-b",
+                      "text": "He did not listen to his team"
+                    },
+                    {
+                      "id": "listening-w1-dq2-1-c",
+                      "text": "The judges were unfair"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq2-1-b"
+                },
+                {
+                  "id": "listening-w1-dq2-2",
+                  "prompt": "What changed in the second competition?",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq2-2-a",
+                      "text": "He talked louder"
+                    },
+                    {
+                      "id": "listening-w1-dq2-2-b",
+                      "text": "He ignored his team"
+                    },
+                    {
+                      "id": "listening-w1-dq2-2-c",
+                      "text": "He listened and collaborated"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq2-2-c"
+                },
+                {
+                  "id": "listening-w1-dq2-3",
+                  "prompt": "Listening improves:",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq2-3-a",
+                      "text": "Only friendships"
+                    },
+                    {
+                      "id": "listening-w1-dq2-3-b",
+                      "text": "Only school grades"
+                    },
+                    {
+                      "id": "listening-w1-dq2-3-c",
+                      "text": "Team performance and understanding"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq2-3-c"
+                },
+                {
+                  "id": "listening-w1-dq2-4",
+                  "prompt": "Which is a sign of active listening?",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq2-4-a",
+                      "text": "Interrupting"
+                    },
+                    {
+                      "id": "listening-w1-dq2-4-b",
+                      "text": "Writing key points"
+                    },
+                    {
+                      "id": "listening-w1-dq2-4-c",
+                      "text": "Checking messages"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq2-4-b"
+                },
+                {
+                  "id": "listening-w1-dq2-5",
+                  "prompt": "True leadership requires:",
+                  "options": [
+                    {
+                      "id": "listening-w1-dq2-5-a",
+                      "text": "Dominating conversations"
+                    },
+                    {
+                      "id": "listening-w1-dq2-5-b",
+                      "text": "Listening before deciding"
+                    },
+                    {
+                      "id": "listening-w1-dq2-5-c",
+                      "text": "Always being right"
+                    }
+                  ],
+                  "correctOptionId": "listening-w1-dq2-5-b"
+                }
+              ],
+              "reviewHeading": "Great Answers!",
+              "continueLabel": "Continue →",
+              "recapHeading": "Listening is:",
+              "recapPoints": [
+                "Attention",
+                "Understanding",
+                "Respect",
+                "Strategy"
+              ]
+            },
+            {
+              "id": "listening-advanced-w1-challenge",
+              "type": "challenge-tracker",
+              "order": 4,
+              "prompt": "Challenge of the Week",
+              "badge": "Challenge of the Week",
+              "title": "48-Hour Active Listening Experiment",
+              "subtitle": "For two days: no interrupting, maintain eye contact, and summarize what someone says before responding.",
+              "image": "",
+              "imageAlt": "A student listening closely to a friend",
+              "dailyChallengeHeading": "Your Challenge",
+              "dailyChallengeIntro": "For two days, practise these every time you talk with someone:",
+              "dailyChallengeItems": [
+                "No interrupting",
+                "Maintain eye contact",
+                "Summarize what someone says before responding"
+              ],
+              "parentHeading": "For Parents & Guardians",
+              "parentIntro": "Children do best with a grown-up beside them. Parents and guardians should guide their child through this challenge — encouraging, listening and cheering them on.",
+              "parentItems": [
+                "Ask your child each day: how did it feel to really listen today?",
+                "Model it yourself — let them see you listen without interrupting too.",
+                "Celebrate the moments they practise it, however small.",
+                "Tick each day together once they've done it, so the win feels shared."
+              ],
+              "trackerHeading": "Listening & Reflection",
+              "trackerIntro": "Track your two days of active listening below.",
+              "days": [
+                "Day 1",
+                "Day 2"
+              ],
+              "reflectionHeading": "Complete:",
+              "reflectionPrompts": [
+                {
+                  "id": "listening-w1-reflect-1",
+                  "label": "Did conversations feel different?",
+                  "placeholder": "Type your answer here…"
+                },
+                {
+                  "id": "listening-w1-reflect-2",
+                  "label": "Did people respond differently?",
+                  "placeholder": "Type your answer here…"
+                },
+                {
+                  "id": "listening-w1-reflect-3",
+                  "label": "What was difficult?",
+                  "placeholder": "Type your answer here…"
+                }
+              ],
+              "progressHeading": "Progress Tracker",
+              "continueLabel": "Continue →"
+            },
+            {
+              "id": "listening-advanced-w1-confidence-link",
+              "type": "confidence-link",
+              "order": 5,
+              "prompt": "Confidence Link",
+              "badge": "Confidence Link",
+              "headingLine1": "Listening Builds",
+              "headingLine2": "Influence",
+              "subtitle": "When you listen deeply, people trust you, you respond wisely, and you speak with clarity because you understand first.",
+              "trainerQuote": "When you listen deeply, people trust you, you respond wisely, and you speak with clarity because you understand first.",
+              "keyTakeawayLabel": "Key Take-Away",
+              "keyTakeawayQuote": "Listening strengthens influence.",
+              "sayItOutLoudLabel": "Say it out loud",
+              "footerTagline": "Remember: the most powerful thing you can do in a conversation is listen first.",
+              "week": 1,
+              "completeLabel": "Complete Week 1"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "module-respect-advanced",

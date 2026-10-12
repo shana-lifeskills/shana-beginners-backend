@@ -261,6 +261,38 @@ class CurriculumService {
     return { ids, lessons, exercises };
   }
 
+  /** Every active module, metadata only (no `lessons`) — the dashboard and
+   *  trainer module list only ever need this to render a catalog; shipping
+   *  the full lesson/exercise content (~1.3MB across the whole catalog) for
+   *  every module just to show a list would be wasteful. Ordered the same
+   *  way the admin content pipeline orders them. */
+  async list() {
+    const rows = await CurriculumModule.findAll({
+      where: { archivedAt: null },
+      order: [['sortOrder', 'ASC']],
+    });
+    return rows.map((row) => this.toModuleSummaryDto(row));
+  }
+
+  /** One module's full content, including every lesson/exercise — fetched
+   *  when a student/trainer actually opens a module, not for the catalog. */
+  async getById(id) {
+    const row = await CurriculumModule.findOne({ where: { id, archivedAt: null } });
+    if (!row) throw Object.assign(new Error('Module not found'), { status: 404 });
+    return this.toModuleDto(row);
+  }
+
+  /** Same fields as `toModuleDto`, but `lessons` is an empty placeholder
+   *  (never omitted — code that does `module.lessons.length` without
+   *  knowing it only has a summary would crash on `undefined` instead of
+   *  reading 0) and `lessonsTotal`/`exercisesTotal` carry the real counts,
+   *  from the aggregate columns already maintained by `upsertModule` —
+   *  see `list()`. */
+  toModuleSummaryDto(row) {
+    const dto = this.toModuleDto(row);
+    return { ...dto, lessons: [], lessonsTotal: row.lessonCount, exercisesTotal: row.exerciseCount };
+  }
+
   /** Rebuilds the frontend's exact `Module` shape from a stored row. */
   toModuleDto(row) {
     return {
