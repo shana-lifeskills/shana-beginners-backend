@@ -14,6 +14,8 @@ const Task = require('./Task');
 const TaskSubmission = require('./TaskSubmission');
 const PaymentReminderLog = require('./PaymentReminderLog');
 const StudentProfile = require('./StudentProfile');
+const Message = require('./Message');
+const Meeting = require('./Meeting');
 
 // Curriculum: CurriculumModule is the source of truth; lessons/exercises are derived lookups.
 CurriculumModule.belongsTo(User, { as: 'createdBy', foreignKey: 'createdByUserId' });
@@ -63,6 +65,16 @@ User.hasMany(PaymentReminderLog, { foreignKey: 'studentId' });
 StudentProfile.belongsTo(User, { foreignKey: 'userId' });
 User.hasOne(StudentProfile, { foreignKey: 'userId' });
 
+Message.belongsTo(User, { as: 'sender', foreignKey: 'senderId' });
+Message.belongsTo(User, { as: 'recipient', foreignKey: 'recipientId' });
+User.hasMany(Message, { as: 'sentMessages', foreignKey: 'senderId' });
+User.hasMany(Message, { as: 'receivedMessages', foreignKey: 'recipientId' });
+
+Meeting.belongsTo(User, { as: 'host', foreignKey: 'hostId' });
+Meeting.belongsTo(User, { as: 'student', foreignKey: 'studentId' });
+User.hasMany(Meeting, { as: 'hostedMeetings', foreignKey: 'hostId' });
+User.hasMany(Meeting, { as: 'studentMeetings', foreignKey: 'studentId' });
+
 module.exports = {
   sequelize,
   User,
@@ -80,4 +92,6 @@ module.exports = {
   TaskSubmission,
   PaymentReminderLog,
   StudentProfile,
+  Message,
+  Meeting,
 };

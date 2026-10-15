@@ -19,6 +19,8 @@ const taskRoutes = require("./src/routes/tasks");
 const paymentReminderRoutes = require("./src/routes/paymentReminders");
 const analyticsRoutes = require("./src/routes/analytics");
 const curriculumRoutes = require("./src/routes/curriculum");
+const messageRoutes = require("./src/routes/messages");
+const meetingRoutes = require("./src/routes/meetings");
 
 const cron = require("node-cron");
 const paymentReminderService = require("./src/services/paymentReminderService");
@@ -85,6 +87,8 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/payment-reminders", paymentReminderRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/curriculum", curriculumRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/meetings", meetingRoutes);
 
 app.use(errorHandler);
 
